@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\DnDManager.csproj": {}
+    "C:\\Users\\Vladislav\\source\\repos\\WpfApp1\\WpfApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\DnDManager.csproj": {
+    "C:\\Users\\Vladislav\\source\\repos\\WpfApp1\\WpfApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\DnDManager.csproj",
-        "projectName": "DnDManager",
-        "projectPath": "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\DnDManager.csproj",
+        "projectUniqueName": "C:\\Users\\Vladislav\\source\\repos\\WpfApp1\\WpfApp1.csproj",
+        "projectName": "WpfApp1",
+        "projectPath": "C:\\Users\\Vladislav\\source\\repos\\WpfApp1\\WpfApp1.csproj",
         "packagesPath": "C:\\Users\\Vladislav\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\obj\\",
+        "outputPath": "C:\\Users\\Vladislav\\source\\repos\\WpfApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -59,7 +59,7 @@
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             },
-            "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "Microsoft.WindowsDesktop.App.WPF": {
               "privateAssets": "none"
             }
           },
