@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "uh0vwo4cErvfC9vcYk5RAkPQq7tfp7gSfRzqy2Z11NbgGyFrWphEHY42D4vjfs0+kOMdtxUUNHWDctG495EvwA==",
+  "dgSpecHash": "ytcNXab5POu3sf7zG/WxDCU3RKVkw3i2elERfuepUT5hSLGDmklpN9ZsckUkmPW9nDge/27ZJSD/FatdUbn8dw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Vladislav\\source\\repos\\DnDManager\\DnDManager.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Vladislav\\.nuget\\packages\\dapper\\2.1.21\\dapper.2.1.21.nupkg.sha512",
+    "C:\\Users\\Vladislav\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Vladislav\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512"
+  ],
   "logs": []
 }

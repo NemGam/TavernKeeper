@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\Vladislav\source\repos\DnDManager\App.xaml
-11407045341
+4-1140024532
 
-3-1233169557
-1981911467256
-MainWindow.xaml;
+16291820167
+201-1145862446
+MainWindow.xaml;Views\LoginView.xaml;Views\MainMasterView.xaml;Views\MainPlayerView.xaml;
 
-True
+False
 
