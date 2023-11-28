@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\CharacterModificationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -16,9 +19,15 @@
     <Compile Update="Views\MainPlayerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\RegistrationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CharacterModificationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LoginView.xaml">
@@ -28,6 +37,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainPlayerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RegistrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

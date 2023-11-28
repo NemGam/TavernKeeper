@@ -7,6 +7,8 @@ namespace DnDManager.ViewModels
     internal class MainPlayerViewModel : ViewModelBase
     {
 		private UserStore _userStore;
+
+		//Welcome message for the Main Player Screen
 		public string WelcomeMessage
 		{
 			get

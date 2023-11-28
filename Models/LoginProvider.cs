@@ -2,13 +2,12 @@
 {
     internal class LoginProvider
     {
-        DatabaseProvider _databaseProvider;
+        private readonly DatabaseProvider _databaseProvider;
         public LoginProvider(DatabaseProvider databaseProvider)
         {
             _databaseProvider = databaseProvider;
 
         }
-
 
         public bool CheckAuthentication(string login, string password)
         {

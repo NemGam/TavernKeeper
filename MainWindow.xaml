@@ -6,8 +6,15 @@
         xmlns:local="clr-namespace:DnDManager"
         xmlns:views="clr-namespace:DnDManager.Views"
         xmlns:vms="clr-namespace:DnDManager.ViewModels"
+        xmlns:math="http://hexinnovation.com/math"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        MinWidth="800"
+        MinHeight="450"
+        ResizeMode="CanResize">
+    <Window.Resources>
+	    <math:MathConverter x:Key="Math"/>
+    </Window.Resources>
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType ="{x:Type vms:LoginViewModel}">
@@ -16,6 +23,12 @@
             <DataTemplate DataType ="{x:Type vms:MainPlayerViewModel}">
                 <views:MainPlayerView/>
             </DataTemplate>
+	        <DataTemplate DataType ="{x:Type vms:RegistrationViewModel}">
+		        <views:RegistrationView/>
+	        </DataTemplate>
+            <DataTemplate DataType ="{x:Type vms:CharacterModificationViewModel}">
+                <views:CharacterModificationView/>
+	        </DataTemplate>
         </Grid.Resources>
         <ContentControl Content ="{Binding CurrentViewModel}"/>
     </Grid>

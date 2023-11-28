@@ -27,22 +27,22 @@ namespace DnDManager.Models
             set => _level = Math.Clamp(value, 1, 20);
         }
 
-        private SavingThrows _chosenSavingThrows;
-        private Skills _chosenSkills;
+        private SavingThrows _proficientSavingThrows;
+        private Skills _proficientSkills;
 
-        public Skills ChosenSkills
+        public Skills ProficientSkills
         {
-            get => _chosenSkills;
+            get => _proficientSkills;
             set
             {
-                _chosenSkills = value;
+                _proficientSkills = value;
             }
         }
 
-        public SavingThrows ChosenSavingThrows
+        public SavingThrows ProficientSavingThrows
         {
-            get => _chosenSavingThrows;
-            set => _chosenSavingThrows = value;
+            get => _proficientSavingThrows;
+            set => _proficientSavingThrows = value;
         }
 
         public enum Alignment
@@ -71,13 +71,13 @@ namespace DnDManager.Models
         public int CalculateSavingThrowValue(Ability.Type type)
         {
             Ability ab = GetAbilityPropertyFromType(type);
-            return _chosenSavingThrows.HasFlag((SavingThrows)ab.type)? ab.Modifier + ProficiencyBonus : ab.Modifier;
+            return _proficientSavingThrows.HasFlag((SavingThrows)ab.type)? ab.Modifier + ProficiencyBonus : ab.Modifier;
         }  
 
         public int CalculateSkillValue(Skills skill)
         {
             var mod = GetAbilityPropertyFromType(GetAbilityTypeFromSkill(skill)).Modifier;
-            return _chosenSkills.HasFlag(skill) ? mod + ProficiencyBonus : mod;
+            return _proficientSkills.HasFlag(skill) ? mod + ProficiencyBonus : mod;
         }
 
         /// <summary>

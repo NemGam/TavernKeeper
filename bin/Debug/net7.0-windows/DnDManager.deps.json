@@ -9,6 +9,7 @@
       "DnDManager/1.0.0": {
         "dependencies": {
           "Dapper": "2.1.21",
+          "MathConverter": "2.2.0",
           "Npgsql": "7.0.6"
         },
         "runtime": {
@@ -20,6 +21,14 @@
           "lib/net7.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.21.38011"
+          }
+        }
+      },
+      "MathConverter/2.2.0": {
+        "runtime": {
+          "lib/net7.0-windows7.0/MathConverter.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
           }
         }
       },
@@ -56,6 +65,13 @@
       "sha512": "sha512-EaTXNZX60/k9snRsLxFhD2XmoSKubc+VOeL3hBM6/R8j2MT8/81xOc2V8EEhwr8Mu3Sf951PJPxjlXN4FznH0w==",
       "path": "dapper/2.1.21",
       "hashPath": "dapper.2.1.21.nupkg.sha512"
+    },
+    "MathConverter/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tHsg86/7WmBnBMzJys4RMpFqDiuLr4GIaOsxSy2qpT7j3YSslfpwhMd2OE9CE0tW1fevmHBQis+B1Alt395Zvw==",
+      "path": "mathconverter/2.2.0",
+      "hashPath": "mathconverter.2.2.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
       "type": "package",

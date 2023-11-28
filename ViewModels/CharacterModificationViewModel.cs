@@ -112,24 +112,24 @@ namespace DnDManager.ViewModels
 
         public SavingThrows ProficientSavingThrows
         {
-            get => _character.ChosenSavingThrows;
+            get => _character.ProficientSavingThrows;
             set
             {
                 //Players allowed to have only 2 or less proficient throws
                 if (CountEnabledFlags<SavingThrows>(value) > 2) return;
-                _character.ChosenSavingThrows = value;
+                _character.ProficientSavingThrows = value;
                 OnPropertyChanged(nameof(ProficientSavingThrows));
                 NotifyAllSavingThrows();
             }
         }
 
-        public Skills ChosenSkills
+        public Skills ProficientSkills
         {
-            get => _character.ChosenSkills;
+            get => _character.ProficientSkills;
             set
             {
-                _character.ChosenSkills = value;
-                OnPropertyChanged(nameof(ChosenSkills));
+                _character.ProficientSkills = value;
+                OnPropertyChanged(nameof(ProficientSkills));
                 NotifyAllSkills();
             }
         }

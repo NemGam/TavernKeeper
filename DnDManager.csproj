@@ -8,8 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\CharacterSheet.jpg" />
+    <None Remove="Resources\Images\dndbg.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.21" />
+    <PackageReference Include="MathConverter" Version="2.2.0" />
     <PackageReference Include="Npgsql" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\CharacterSheet.jpg" />
+    <Resource Include="Resources\Images\dndbg.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
 
 </Project>
