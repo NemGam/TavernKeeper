@@ -5,30 +5,51 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DnDManager.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{DynamicResource backgroundImage}">
+    <UserControl.Resources>
+
+        <ImageSource x:Key="imgSource">../Resources/Images/dndbg.jpg</ImageSource>
+		<ImageBrush x:Key="backgroundImage" 
+                    ImageSource="{DynamicResource imgSource}" Opacity="0.9"></ImageBrush>
+
+	</UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-          <Label Content="Login:"
-                 HorizontalAlignment="Stretch"/>
-          <TextBox Name="LoginInput"
-                   HorizontalAlignment ="Center"
-                   Background ="#d9d9d9" 
-                   Width="178" Height="25"
-                   Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
-          <Label Content="Password:"
-                 HorizontalAlignment="Stretch"/>
-          <TextBox Name="PasswordInput"
-                   HorizontalAlignment ="Center"
-                   Background ="#d9d9d9" 
-                   Width="178" Height="25"
-                   Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
-          <Button Height="23"
-                  Margin="50,10,50,10"
-                  Content="Login"
-                  Command="{Binding LoginCommand}"></Button>
-          <Label Foreground="Red" Visibility ="hidden">WRONG LOGIN/PASSWORD</Label>
-        </StackPanel>
+        <!--Background="#6b6b6b"-->
+        <Border Padding="16"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="#f0eded"
+                CornerRadius="8">
+            <StackPanel Orientation="Vertical">
+                <Label Content="Username:"
+                         HorizontalAlignment="Stretch"/>
+                <TextBox Name="UserNameInput"
+                           HorizontalAlignment ="Center"
+                           Background ="#d9d9d9" 
+                           Width="178" Height="25"
+                           Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Content="Password:"
+                         HorizontalAlignment="Stretch"/>
+                <TextBox Name="PasswordInput"
+                           HorizontalAlignment ="Center"
+                           Background ="#d9d9d9" 
+                           Width="178" Height="25"
+                           Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Height="23"
+                          Margin="50,10,50,10"
+                          Content="Login"
+                          Command="{Binding LoginCommand}"></Button>
+                <Label Foreground="Red" Visibility ="Collapsed">WRONG USERNAME/PASSWORD</Label>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>
+		                New user?
+		                <Hyperlink Command="{Binding GoToRegistrationCommand}">Register</Hyperlink>
+	                </TextBlock>
+                </StackPanel>
+            
+            
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

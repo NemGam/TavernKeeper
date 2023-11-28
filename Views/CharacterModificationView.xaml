@@ -1,0 +1,561 @@
+﻿<UserControl x:Class="DnDManager.Views.CharacterModificationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DnDManager.Views"
+             xmlns:math="http://hexinnovation.com/math"
+             xmlns:l="clr-namespace:DnDManager"
+             mc:Ignorable="d" 
+             d:DesignHeight="1613.2" d:DesignWidth="1257.6">
+    <UserControl.Resources>
+        <math:MathConverter x:Key="Math"/>
+        <l:FlagsEnumValueConverter x:Key="FlagsConverter" />
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Canvas Width="{Binding ActualWidth, 
+            ConverterParameter=x*1.5, Converter={StaticResource Math}, 
+            ElementName=image}" 
+            Height="{Binding ActualHeight, ConverterParameter=x*1.5, Converter={StaticResource Math}, ElementName=image}" >
+            <Canvas.Background>
+                <VisualBrush  >
+                    <VisualBrush.Visual>
+                        <Image x:Name="image" Source="../Resources/Images/CharacterSheet.jpg"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Canvas.Background>
+            <TextBox Name="CharacterNameTB"
+			         HorizontalAlignment="Left"
+			         Background ="#d9d9d9" 
+			         Width="275" Height="33"
+                     MaxLength="32"
+                     FontSize="18"
+			         Text="{Binding CharacterName}" Canvas.Left="105" Canvas.Top="126"/>
+            <TextBox x:Name="ClassTB"
+                Background ="#d9d9d9" 
+                Width="135" Height="33"
+                MaxLength="16"
+                FontSize="18"
+                Text="{Binding CharacterClass}" Canvas.Left="531" Canvas.Top="96"/>
+            <TextBox x:Name="BackgroundTB"
+                Background ="#d9d9d9" 
+                Width="185" Height="33"
+                MaxLength="16"
+                FontSize="18"
+                Text="{Binding Background}" Canvas.Left="732" Canvas.Top="96" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="PlayerNameTB"
+                Width="185" Height="33"
+                IsEnabled="False"
+                FontWeight="Bold"
+                FontSize="20"
+                Text="{Binding PlayerName, Mode=OneWay}" Canvas.Left="936" Canvas.Top="96"/>
+            <TextBox x:Name="RaceTB"
+                     Background ="#d9d9d9" 
+                     Width="185" Height="34"
+                     MaxLength="16"
+                     FontSize="18"
+                     Text="{Binding Race}" Canvas.Left="531" Canvas.Top="148"/>
+            <ComboBox x:Name="AlignmentCB"
+                     Background ="#d9d9d9" 
+                     Width="185" Height="33"
+                     FontSize="18"
+                     ItemsSource="{Binding PossibleAlignments}"
+                     SelectedItem="{Binding ChosenAlignment}"
+                     Canvas.Left="733" Canvas.Top="148" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="ExperienceTB"
+                     Background ="#d9d9d9" 
+                     Width="185" Height="33"
+                     MaxLength="16"
+                     FontSize="18"
+                     Text="{Binding EXP}" Canvas.Left="936" Canvas.Top="148" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="InspirationTB"
+                     Background ="#d9d9d9" 
+                     Width="41" Height="40"
+                     MaxLength="2"
+                     FontSize="30"
+                     InputScope="Number"
+                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="195" Canvas.Top="259"/>
+            <TextBox x:Name="UserNameInput_Copy8"
+                Background ="#d9d9d9" 
+                Width="322" Height="726"
+                Text="{Binding UserName}" Canvas.Left="828" Canvas.Top="776"/>
+            <!--Abilities -->
+            <TextBox x:Name="StrengthAbilityModTB" 
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     Text="{Binding StrengthMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="312" FontSize="30" FontWeight="Bold"/>
+            <TextBox x:Name="StrengthTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Strength, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="374"/>
+            <TextBox x:Name="DexterityModTB"
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     FontSize="30" FontWeight="Bold"
+                     Text="{Binding DexterityMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="457" />
+            <TextBox x:Name="DexterityTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Dexterity, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="519"/>
+            <TextBox x:Name="ConstitutionModTB"
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     FontSize="30" FontWeight="Bold"
+                     Text="{Binding ConstitutionMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="600"/>
+            <TextBox x:Name="ConstitutionTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Constitution, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="662"/>
+            <TextBox x:Name="IntelligenceModTB"
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     FontSize="30" FontWeight="Bold"
+                     Text="{Binding IntelligenceMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="744"/>
+            <TextBox x:Name="IntelligenceTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Intelligence, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="806"/>
+            <TextBox x:Name="WisdomModTB"
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     FontSize="30" FontWeight="Bold"
+                     Focusable="False"
+                     Text="{Binding WisdomMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="886"/>
+            <TextBox x:Name="WisdomTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2" InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Wisdom, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="948"/>
+            <TextBox x:Name="CharismaModTB"
+                     Width="49" Height="49"
+                     IsReadOnly="True" IsEnabled="False"
+                     FontSize="30" FontWeight="Bold"
+                     Text="{Binding CharismaMod, Mode=OneWay}" Canvas.Left="91" Canvas.Top="1030"/>
+            <TextBox x:Name="CharismaTB"
+                     Background ="#d9d9d9" 
+                     Width="49" Height="24"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="16"
+                     Text="{Binding Charisma, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="1092"/>
+            <!--Traits, Ideals, Bonds and Flaws-->
+            <TextBox x:Name="UserNameInput_Copy20"
+                Background ="#d9d9d9" 
+                Width="304" Height="85"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="287" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy21"
+                Background ="#d9d9d9" 
+                Width="304" Height="66"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="422" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy22"
+                Background ="#d9d9d9" 
+                Width="304" Height="66"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="531" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy23"
+                Background ="#d9d9d9" 
+                Width="304" Height="66"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="641" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!--///////////-->
+            <TextBox x:Name="ProficiencyBonusTB"
+                     Width="30" Height="30"
+                     TextAlignment="Center"
+                     FontSize="20" FontWeight="Bold" 
+                     IsEnabled="False"
+                     Text="{Binding ProficiencyBonus, Mode=OneWay}" 
+                     Canvas.Left="201" Canvas.Top="339"/>
+            <TextBox x:Name="PassiveWisdomTB"
+                     Width="39" Height="32"
+                     FontSize="20" FontWeight="Bold" 
+                     IsEnabled="False"
+                     Text="{Binding PassiveWisdom, Mode=OneWay}" Canvas.Left="66" Canvas.Top="1183"/>
+            <TextBox x:Name="OtherProficiencies_Languages"
+                     Background ="#d9d9d9" 
+                     Width="335" Height="258"
+                     MaxLength="1024"
+                     TextWrapping="Wrap"
+                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="66" Canvas.Top="1251"/>
+            <TextBox x:Name="UserNameInput_Copy27"
+                Background ="#d9d9d9" 
+                Width="238" Height="317"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="542" Canvas.Top="1192" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy28"
+                Background ="#d9d9d9" 
+                Width="46" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1199" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameInput_Copy29"
+                Background ="#d9d9d9" 
+                Width="46" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1251" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy30"
+                Background ="#d9d9d9" 
+                Width="46" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1303" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy31"
+                Background ="#d9d9d9" 
+                Width="46" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1356" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy32"
+                Background ="#d9d9d9" 
+                Width="46" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1407" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy33"
+                Background ="#d9d9d9" 
+                Width="336" Height="219"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="444" Canvas.Top="916" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="ArmorClassTB"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="46"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="30"
+                     Text="{Binding ArmorClass}" Canvas.Left="471" Canvas.Top="284" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="InitiativeTB"
+                     Width="78" Height="69"
+                     FontSize="50" FontWeight="Bold" 
+                     IsEnabled="False"
+                     Text="{Binding Initiative, Mode=OneWay}" Canvas.Left="568" Canvas.Top="279" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="SpeedTB"
+                     Background ="#d9d9d9" 
+                     Width="78" Height="69"
+                     MaxLength="2"
+                     InputScope="Number"
+                     FontSize="45"
+                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="687" Canvas.Top="279" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy37"
+                Background ="#d9d9d9" 
+                Width="96" Height="18"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="494" Canvas.Top="638" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy38"
+                Background ="#d9d9d9" 
+                Width="133" Height="44"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="459" Canvas.Top="661" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy39"
+                Background ="#d9d9d9" 
+                Width="128" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="783" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameInput_Copy40"
+                Background ="#d9d9d9" 
+                Width="128" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy41"
+                Background ="#d9d9d9" 
+                Width="128" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy42"
+                Background ="#d9d9d9" 
+                Width="61" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameInput_Copy43"
+                Background ="#d9d9d9" 
+                Width="61" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy44"
+                Background ="#d9d9d9" 
+                Width="61" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy45"
+                Background ="#d9d9d9" 
+                Width="125" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameInput_Copy46"
+                Background ="#d9d9d9" 
+                Width="125" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="UserNameInput_Copy47"
+                Background ="#d9d9d9" 
+                Width="125" Height="32"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <!--Saving Throws (ST)-->
+            <CheckBox Content=""
+                      IsChecked="{Binding 
+                                Path=ProficientSavingThrows,
+                                Converter={StaticResource FlagsConverter},
+                                ConverterParameter={x:Static l:SavingThrows.Strength}}" Canvas.Left="201" Canvas.Top="416"/>
+            <TextBox x:Name="StrengthSTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding StrengthSavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="415"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSavingThrows,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:SavingThrows.Dexterity}}" Canvas.Left="201" Canvas.Top="443"/>
+            <TextBox x:Name="DexteritySTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding DexteritySavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="441"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSavingThrows,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:SavingThrows.Constitution}}" Canvas.Left="201" Canvas.Top="469"/>
+            <TextBox x:Name="ConstitutionSTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding ConstitutionSavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="469"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSavingThrows,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:SavingThrows.Intelligence}}" Canvas.Left="201" Canvas.Top="497"/>
+            <TextBox x:Name="IntelligenceSTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding IntelligenceSavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="497"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSavingThrows,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:SavingThrows.Wisdom}}" Canvas.Left="201" Canvas.Top="525"/>
+            <TextBox x:Name="WisdomSTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding WisdomSavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="524"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSavingThrows,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:SavingThrows.Charisma}}" Canvas.Left="201" Canvas.Top="552"/>
+            <TextBox x:Name="CharismaSTValue"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding CharismaSavingThrowValue, Mode=OneWay}" Canvas.Left="224" Canvas.Top="551"/>
+
+            <!--Skills-->
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Acrobatics}}" Canvas.Left="201" Canvas.Top="646"/>
+            <TextBox x:Name="AcrobaticsTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Acrobatics, Mode=OneWay}" Canvas.Left="224" Canvas.Top="646"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.AnimalHandling}}" Canvas.Left="201" Canvas.Top="673"/>
+            <TextBox x:Name="AnimalHandlingTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding AnimalHandling, Mode=OneWay}" Canvas.Left="224" Canvas.Top="672"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Arcana}}" Canvas.Left="201" Canvas.Top="701" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="ArcanaTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Arcana, Mode=OneWay}" Canvas.Left="224" Canvas.Top="700"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Athletics}}" Canvas.Left="201" Canvas.Top="727" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="AthleticsTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Athletics, Mode=OneWay}" Canvas.Left="224" Canvas.Top="726"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Deception}}" Canvas.Left="201" Canvas.Top="755" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="DeceptionTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Deception, Mode=OneWay}" Canvas.Left="224" Canvas.Top="754"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.History}}" Canvas.Left="201" Canvas.Top="784" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="HistoryTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding History, Mode=OneWay}" Canvas.Left="224" Canvas.Top="783"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Insight}}" Canvas.Left="201" Canvas.Top="811" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="InsightTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Insight, Mode=OneWay}" Canvas.Left="224" Canvas.Top="810"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Intimidation}}" Canvas.Left="201" Canvas.Top="835" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="IntimidationTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Intimidation, Mode=OneWay}" Canvas.Left="224" Canvas.Top="834"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Investigation}}" Canvas.Left="201" Canvas.Top="864" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="InvestigationTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Investigation, Mode=OneWay}" Canvas.Left="224" Canvas.Top="863"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Medicine}}" Canvas.Left="201" Canvas.Top="891" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="MedicineTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Medicine, Mode=OneWay}" Canvas.Left="224" Canvas.Top="890"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Nature}}" Canvas.Left="201" Canvas.Top="917" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="NatureTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Nature, Mode=OneWay}" Canvas.Left="224" Canvas.Top="916"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Perception}}" Canvas.Left="201" Canvas.Top="945" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="PerceptionTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Perception, Mode=OneWay}" Canvas.Left="224" Canvas.Top="944"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Performance}}" Canvas.Left="201" Canvas.Top="972" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="PerformanceTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Performance, Mode=OneWay}" Canvas.Left="224" Canvas.Top="971"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Persuasion}}" Canvas.Left="201" Canvas.Top="998" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="PersuasionTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Persuasion, Mode=OneWay}" Canvas.Left="224" Canvas.Top="997"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Religion}}" Canvas.Left="201" Canvas.Top="1026" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="ReligionTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Religion, Mode=OneWay}" Canvas.Left="224" Canvas.Top="1025"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.SleightOfHand}}" Canvas.Left="201" Canvas.Top="1052" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="SleightOfHandTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding SleightOfHand, Mode=OneWay}" Canvas.Left="224" Canvas.Top="1051"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Stealth}}" Canvas.Left="201" Canvas.Top="1079" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="StealthTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Stealth, Mode=OneWay}" Canvas.Left="224" Canvas.Top="1078"/>
+
+            <CheckBox IsChecked="{Binding 
+                      Path=ProficientSkills,
+                      Converter={StaticResource FlagsConverter},
+                      ConverterParameter={x:Static l:Skills.Survival}}" Canvas.Left="201" Canvas.Top="1105" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="SurvivalTB"
+                     Width="30" Height="16"
+                     IsEnabled="False"
+                     FontWeight="Bold"
+                     Text="{Binding Survival, Mode=OneWay}" Canvas.Left="224" Canvas.Top="1104"/>
+            <!--////////////-->
+            <TextBox x:Name="LevelTB"
+                     Background ="#d9d9d9" 
+                     Width="33" Height="33"
+                     TextAlignment="Center"
+                     MaxLength="2"
+                     InputScope="Number"
+                     HorizontalAlignment="Center" 
+                     Text="{Binding Level, Mode=TwoWay}"
+                     Canvas.Left="683" Canvas.Top="96" FontSize="20"/>
+            <TextBox x:Name="UserNameInput_Copy24"
+                     Background ="#d9d9d9" 
+                     Width="299" Height="62"
+                     Text="{Binding UserName}" Canvas.Left="466" Canvas.Top="423" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox x:Name="UserNameInput_Copy72"
+                Background ="#d9d9d9" 
+                Width="180" Height="22"
+                Text="{Binding UserName}" Canvas.Left="585" Canvas.Top="393" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="TemporaryHPTB"
+                Background ="#d9d9d9" 
+                Width="299" Height="62"
+                Text="{Binding UserName}" Canvas.Left="466" Canvas.Top="528" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+            <Button Width="136" Height="28" 
+                    Canvas.Left="924" Canvas.Top="1546" 
+                    Content="Submit"
+                    FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding SubmitCharacterCommand}"/>
+                    
+            <Button Width="136" Height="28" 
+                    Canvas.Left="1078" Canvas.Top="1546" 
+                    Content="Cancel"
+                    FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+
+        </Canvas>
+    </ScrollViewer>
+</UserControl>

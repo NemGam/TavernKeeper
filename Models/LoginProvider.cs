@@ -2,17 +2,17 @@
 {
     internal class LoginProvider
     {
-
-        public LoginProvider()
+        DatabaseProvider _databaseProvider;
+        public LoginProvider(DatabaseProvider databaseProvider)
         {
-
+            _databaseProvider = databaseProvider;
 
         }
 
 
         public bool CheckAuthentication(string login, string password)
         {
-            return false;
+            return true;
             /*
             //Check if any fields are empty
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))

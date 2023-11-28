@@ -1,6 +1,7 @@
 ﻿using DnDManager.Commands;
 using DnDManager.Models;
-using System.Windows.Input;
+using DnDManager.Services;
+using DnDManager.Stores;
 
 namespace DnDManager.ViewModels
 {
@@ -8,40 +9,41 @@ namespace DnDManager.ViewModels
     {
         private readonly LoginProvider _loginProvider;
 
-        private string? _login;
-        public string? Login
+        private string? _userName;
+        public string? UserName
         {
-            get
-            {
-                return _login;
-            }
+            get => _userName;
             set
             {
-                _login = value;
-                OnPropertyChanged(nameof(Login));
+                _userName = value;
+                OnPropertyChanged(nameof(UserName));
             }
         }
-
 
         private string? _password;
         public string? Password
         {
-            get
-            {
-                return _password;
-            }
+            get => _password;
             set
             {
                 _password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
-        public ICommand LoginCommand { get; }
+        public LoginCommand LoginCommand { get; }
+        public NavigateCommand<RegistrationViewModel> GoToRegistrationCommand { get; }
 
-        public LoginViewModel()
+        public LoginViewModel(DatabaseProvider DBProvider, UserStore userStore, NavigationService<RegistrationViewModel> registrationViewModelNS, 
+            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
         {
-            _loginProvider = new LoginProvider();
-            LoginCommand = new LoginCommand(this);
+            _loginProvider = new LoginProvider(DBProvider);
+            LoginCommand = new LoginCommand(this, userStore, mainPlayerViewModelNS);
+            GoToRegistrationCommand = new NavigateCommand<RegistrationViewModel>(registrationViewModelNS);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
 
 

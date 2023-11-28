@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using System.Configuration;
 using System.Diagnostics;
 
 namespace DnDManager.Models
@@ -7,10 +8,18 @@ namespace DnDManager.Models
     {
         private readonly NpgsqlConnection connection;
 
-        private readonly string connectionString = @"Server=localhost;Port=5432;User ID=postgres;Password=;Database=Test;";
+        
+        private readonly string connectionString = 
+            $@"User Id={ConfigurationManager.AppSettings.Get("UserID")};
+            Password={ConfigurationManager.AppSettings.Get("Password")};
+            Server={ConfigurationManager.AppSettings.Get("Server")};
+            Port={ConfigurationManager.AppSettings.Get("Port")};
+            Database={ConfigurationManager.AppSettings.Get("Database")}";
 
-        private DatabaseProvider()
+        public DatabaseProvider()
         {
+            
+            return;
             connection = GetConnection();
             connection.Open();
             if (connection.State == System.Data.ConnectionState.Open)
