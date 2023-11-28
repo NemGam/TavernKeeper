@@ -29,7 +29,8 @@ namespace DnDManager
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateLoginViewModel();
+            //_navigationStore.CurrentViewModel = CreateLoginViewModel();
+            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel();
             
             //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
             MainWindow = new MainWindow()
