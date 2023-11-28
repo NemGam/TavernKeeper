@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Icons\DnDManagerIcon.png" />
     <None Remove="Resources\Images\CharacterSheet.jpg" />
     <None Remove="Resources\Images\dndbg.jpg" />
+    <None Remove="Resources\Images\MainMenuBG.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,12 +21,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Icons\DnDManagerIcon.png" />
     <Resource Include="Resources\Images\CharacterSheet.jpg" />
     <Resource Include="Resources\Images\dndbg.jpg" />
+    <Resource Include="Resources\Images\MainMenuBG.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="DbCommands\" />
   </ItemGroup>
 
 </Project>
