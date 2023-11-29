@@ -13,6 +13,7 @@ namespace DnDManager.Models
         private readonly int _id = -1000;
 
         private int _level;
+        private int _speed;
 
         public int Id => _id;
         public string CharacterName { get; set; }
@@ -20,7 +21,16 @@ namespace DnDManager.Models
         public string Background { get; set; }
         public string Race { get; set; }
         public string EXP { get; set; }
-        public string ArmorClass { get; set; }
+        public int ArmorClass { get; set; }
+        public int Inspiration { get; set; }
+        public int Speed
+        {
+            get { return _speed; }
+            set => _speed = Math.Max(0, value);
+        }
+
+        public string HitDice { get; set; }
+        public string ProfAndLang { get; set; }
 
         public Alignment ChosenAlignment { get; set; }
         public int Level

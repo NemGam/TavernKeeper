@@ -1,4 +1,5 @@
 ﻿using DnDManager.Commands;
+using DnDManager.Models;
 using DnDManager.Services;
 using DnDManager.Stores;
 
@@ -22,18 +23,19 @@ namespace DnDManager.ViewModels
 			}
 		}
 
-		public NavigateCommand<CharacterModificationViewModel> CreateCharacterCommand { get; }
+		public ParameterNavigateCommand<Character, CharacterModificationViewModel> CreateCharacterCommand { get; }
 		public NavigateCommand<CharacterBrowserViewModel> BrowseCharacterCommand { get; }
         public NavigateCommand<ViewModelBase> ContinueGameCommand { get; }
         public NavigateCommand<ViewModelBase> BrowseGameCommand { get; }
 
         public MainPlayerViewModel(UserStore userStore, 
-			NavigationService<CharacterModificationViewModel> characterModificationNS,
+			ParameterNavigationService<Character, CharacterModificationViewModel> characterModificationNS,
 			NavigationService<CharacterBrowserViewModel> characterBrowserNS
 			)
         {
 			_userStore = userStore;
-			CreateCharacterCommand = new NavigateCommand<CharacterModificationViewModel>(characterModificationNS);
+			CreateCharacterCommand = new ParameterNavigateCommand<Character, CharacterModificationViewModel>
+				(characterModificationNS, new Character());
             BrowseCharacterCommand = new NavigateCommand<CharacterBrowserViewModel>(characterBrowserNS);
         }
 

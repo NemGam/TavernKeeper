@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <math:MathConverter x:Key="Math"/>
         <l:FlagsEnumValueConverter x:Key="FlagsConverter" />
+        <l:FlagsEnumValueConverter x:Key="FlagsConverter2" />
     </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Canvas Width="{Binding ActualWidth, 
@@ -74,7 +75,7 @@
                      MaxLength="2"
                      FontSize="30"
                      InputScope="Number"
-                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="195" Canvas.Top="259"/>
+                     Text="{Binding Inspiration}" Canvas.Left="195" Canvas.Top="259"/>
             <TextBox x:Name="UserNameInput_Copy8"
                 Background ="#d9d9d9" 
                 Width="322" Height="726"
@@ -186,7 +187,7 @@
                      Width="335" Height="258"
                      MaxLength="1024"
                      TextWrapping="Wrap"
-                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="66" Canvas.Top="1251"/>
+                     Text="{Binding ProfAndLang}" Canvas.Left="66" Canvas.Top="1251"/>
             <TextBox x:Name="UserNameInput_Copy27"
                 Background ="#d9d9d9" 
                 Width="238" Height="317"
@@ -233,15 +234,12 @@
                      MaxLength="2"
                      InputScope="Number"
                      FontSize="45"
-                     Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="687" Canvas.Top="279" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy37"
+                     Text="{Binding Speed, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="687" Canvas.Top="279" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="HitDiceTB"
                 Background ="#d9d9d9" 
                 Width="96" Height="18"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="494" Canvas.Top="638" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy38"
-                Background ="#d9d9d9" 
-                Width="133" Height="44"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="459" Canvas.Top="661" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                MaxLength="5"
+                Text="{Binding HitDice}" Canvas.Left="494" Canvas.Top="638" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="UserNameInput_Copy39"
                 Background ="#d9d9d9" 
                 Width="128" Height="32"
@@ -283,7 +281,7 @@
             <CheckBox Content=""
                       IsChecked="{Binding 
                                 Path=ProficientSavingThrows,
-                                Converter={StaticResource FlagsConverter},
+                                Converter={StaticResource FlagsConverter2},
                                 ConverterParameter={x:Static l:SavingThrows.Strength}}" Canvas.Left="201" Canvas.Top="416"/>
             <TextBox x:Name="StrengthSTValue"
                      Width="30" Height="16"
@@ -293,7 +291,7 @@
 
             <CheckBox IsChecked="{Binding 
                       Path=ProficientSavingThrows,
-                      Converter={StaticResource FlagsConverter},
+                      Converter={StaticResource FlagsConverter2},
                       ConverterParameter={x:Static l:SavingThrows.Dexterity}}" Canvas.Left="201" Canvas.Top="443"/>
             <TextBox x:Name="DexteritySTValue"
                      Width="30" Height="16"
@@ -303,7 +301,7 @@
 
             <CheckBox IsChecked="{Binding 
                       Path=ProficientSavingThrows,
-                      Converter={StaticResource FlagsConverter},
+                      Converter={StaticResource FlagsConverter2},
                       ConverterParameter={x:Static l:SavingThrows.Constitution}}" Canvas.Left="201" Canvas.Top="469"/>
             <TextBox x:Name="ConstitutionSTValue"
                      Width="30" Height="16"
@@ -313,7 +311,7 @@
 
             <CheckBox IsChecked="{Binding 
                       Path=ProficientSavingThrows,
-                      Converter={StaticResource FlagsConverter},
+                      Converter={StaticResource FlagsConverter2},
                       ConverterParameter={x:Static l:SavingThrows.Intelligence}}" Canvas.Left="201" Canvas.Top="497"/>
             <TextBox x:Name="IntelligenceSTValue"
                      Width="30" Height="16"
@@ -323,7 +321,7 @@
 
             <CheckBox IsChecked="{Binding 
                       Path=ProficientSavingThrows,
-                      Converter={StaticResource FlagsConverter},
+                      Converter={StaticResource FlagsConverter2},
                       ConverterParameter={x:Static l:SavingThrows.Wisdom}}" Canvas.Left="201" Canvas.Top="525"/>
             <TextBox x:Name="WisdomSTValue"
                      Width="30" Height="16"
@@ -333,7 +331,7 @@
 
             <CheckBox IsChecked="{Binding 
                       Path=ProficientSavingThrows,
-                      Converter={StaticResource FlagsConverter},
+                      Converter={StaticResource FlagsConverter2},
                       ConverterParameter={x:Static l:SavingThrows.Charisma}}" Canvas.Left="201" Canvas.Top="552"/>
             <TextBox x:Name="CharismaSTValue"
                      Width="30" Height="16"

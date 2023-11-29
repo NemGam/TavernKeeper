@@ -1,6 +1,7 @@
 ﻿using DnDManager.Commands;
 using DnDManager.Models;
 using DnDManager.Services;
+using DnDManager.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,9 +13,10 @@ namespace DnDManager.ViewModels
 {
     internal class CharacterBrowserViewModel : ViewModelBase
     {
-        private DatabaseProvider _databaseProvider;
+        private readonly DatabaseProvider _databaseProvider;
+        private readonly UserStore _userStore;
 
-        public ObservableCollection<SimplifiedCharacter> SimplifiedCharacterList { get; }
+        public ObservableCollection<SimplifiedCharacter> SimplifiedCharacterList { get; private set; }
 
         private SimplifiedCharacter? _selectedCharacter;
         public SimplifiedCharacter? SelectedCharacter 
@@ -38,19 +40,24 @@ namespace DnDManager.ViewModels
         public NavigateCommand<MainPlayerViewModel> GoBackCommand { get; }
         public EditCharacterCommand EditCharacterCommand { get; }
         public DeleteCharacterCommand DeleteCharacterCommand { get; }
-        public CharacterBrowserViewModel(DatabaseProvider databaseProvider, NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
+        public CharacterBrowserViewModel(UserStore userStore, DatabaseProvider databaseProvider, 
+            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS,
+            ParameterNavigationService<Character, CharacterModificationViewModel> characterModPNS)
         {
+            _userStore = userStore;
             _databaseProvider = databaseProvider;
-            SimplifiedCharacterList = new ObservableCollection<SimplifiedCharacter>();
+            FillCharactersList();
+            
             GoBackCommand = new NavigateCommand<MainPlayerViewModel>(mainPlayerViewModelNS);
-            EditCharacterCommand = new EditCharacterCommand(this, databaseProvider);
+            EditCharacterCommand = new EditCharacterCommand(this, databaseProvider, characterModPNS);
             DeleteCharacterCommand = new DeleteCharacterCommand(this);
-            SimplifiedCharacterList = new ObservableCollection<SimplifiedCharacter>();
-            //Get characters from simplified view
-            SimplifiedCharacterList.Add(new SimplifiedCharacter(23, "Mor", 20, "Wigle", "Beach", "Genie", Character.Alignment.LawfulGood));
-            SimplifiedCharacterList.Add(new SimplifiedCharacter(26, "FGF", 5, "NotWigle", "Forest Child", "Genie", Character.Alignment.LawfulGood));
-            SimplifiedCharacterList.Add(new SimplifiedCharacter(21, "Tester", 11, "Tester", "Tester", "Tester", Character.Alignment.LawfulGood));
-            SimplifiedCharacterList.Add(new SimplifiedCharacter(28, "SS", 1, "Wigle", "Beach", "Dwarf", Character.Alignment.LawfulGood));
+        }
+
+        private async void FillCharactersList()
+        {
+            string sql = "SELECT * FROM simplified_chracters_view WHERE owner_username = @username";
+            SimplifiedCharacterList = 
+                 new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql, new {username = _userStore.CurrentUser.UserName}));
         }
     }
 }

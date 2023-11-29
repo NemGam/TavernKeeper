@@ -115,9 +115,10 @@ namespace DnDManager.ViewModels
             get => _character.ProficientSavingThrows;
             set
             {
-                //Players allowed to have only 2 or less proficient throws
+                //Players are allowed to have only 2 or less proficient throws
                 if (CountEnabledFlags<SavingThrows>(value) > 2) return;
                 _character.ProficientSavingThrows = value;
+                Debug.WriteLine(value);
                 OnPropertyChanged(nameof(ProficientSavingThrows));
                 NotifyAllSavingThrows();
             }
@@ -129,6 +130,7 @@ namespace DnDManager.ViewModels
             set
             {
                 _character.ProficientSkills = value;
+                Debug.WriteLine(value);
                 OnPropertyChanged(nameof(ProficientSkills));
                 NotifyAllSkills();
             }
@@ -149,7 +151,7 @@ namespace DnDManager.ViewModels
             var skills = Enum.GetValues(typeof(Skills));
             if (skills is null) return;
 
-            //Notifiying all the skills about the change
+            //Notifying all the skills about the change
             //TODO: notify only changed skill
             //Skipping first as it is None
             for (int i = 1; i < skills.Length; i++)
@@ -195,10 +197,34 @@ namespace DnDManager.ViewModels
             set => _character.EXP = value;
         }
 
-        public string ArmorClass
+        public int ArmorClass
         {
             get => _character.ArmorClass;
             set => _character.ArmorClass = value;
+        }
+
+        public int Speed
+        {
+            get => _character.Speed;
+            set => _character.Speed = value;
+        }
+
+        public int Inspiration
+        {
+            get => _character.Inspiration;
+            set => _character.Inspiration = value;
+        }
+
+        public string HitDice
+        {
+            get => _character.HitDice;
+            set => _character.HitDice = value;
+        }
+
+        public string ProfAndLang
+        {
+            get => _character.ProfAndLang;
+            set => _character.ProfAndLang = value;
         }
 
         public Alignment[] PossibleAlignments => new Alignment[] {
@@ -213,10 +239,10 @@ namespace DnDManager.ViewModels
             Alignment.ChaoticEvil
         };
 
+
+        #region Getters
+
         public string PlayerName => _userStore.CurrentUser.FirstName is not null? _userStore.CurrentUser.FirstName : "ERROR ERROR";
-
-        #region NumbersProperties
-
         public int ProficiencyBonus => _character.ProficiencyBonus;
         public int Initiative => DexterityMod;
 

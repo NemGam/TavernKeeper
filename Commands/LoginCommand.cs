@@ -11,28 +11,6 @@ using System.Threading.Tasks;
 
 namespace DnDManager.Commands
 {
-    /*
-    public class Usr
-    {
-        string username;
-        string firstname;
-        string lastname;
-        string pass;
-
-        public Usr(string username, string first_name, string last_name, string hashed_pwd)
-        {
-            this.username = username;
-            this.firstname = first_name;
-            this.lastname = last_name;
-            this.pass = hashed_pwd;
-        }
-
-        public override string ToString()
-        {
-            return $"{username}, {firstname}, {lastname}, {pass}";
-        }
-    }
-    */
 
     internal class LoginCommand : CommandBase
     {
@@ -49,12 +27,6 @@ namespace DnDManager.Commands
             _mainPlayerViewNS = mainPlayerViewNS;
             _databaseProvider = databaseProvider;
             loginViewModel.PropertyChanged += OnViewModelPropertyChanged;
-            /*
-            List<Usr> users = Task.Run(() => _databaseProvider.GetAsync<Usr>("SELECT * FROM Users")).Result;
-            foreach(var user in users){
-                Debug.WriteLine(user);
-            }
-            */
         }
 
 
@@ -69,7 +41,7 @@ namespace DnDManager.Commands
         ~LoginCommand()
         {
             Debug.WriteLine("Disposed");
-            _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+            
         }
 
         public override void Execute(object? parameter)
@@ -78,13 +50,14 @@ namespace DnDManager.Commands
             Login();
         }
 
-        private void Login()
+        private async void Login()
         {
             if (true)
             {
                 //if type == Player: Go there, else go to Master
                 //Get stuff from DB
                 _userStore.CurrentUser = new User(_loginViewModel.UserName, "Test");
+                _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
                 _mainPlayerViewNS.Navigate();
             }
             else

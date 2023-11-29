@@ -38,9 +38,9 @@ namespace DnDManager
             else
             {
                
-            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel(_dbProvider,
-                new NavigationService<MainPlayerViewModel>(_navigationStore,
-                () => CreateMainPlayerViewModel()));
+            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel(_userStore, _dbProvider,
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
+                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel));
             
                 //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
             }
@@ -63,20 +63,22 @@ namespace DnDManager
         private MainPlayerViewModel CreateMainPlayerViewModel()
         {
             return new MainPlayerViewModel(_userStore, 
-                new NavigationService<CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel),
+                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, 
+                (character) => CreateCharacterModificationViewModel(character)),
                 new NavigationService<CharacterBrowserViewModel>(_navigationStore, CreateCharacterBrowserViewModel));
         }
 
-        private CharacterModificationViewModel CreateCharacterModificationViewModel()
+        private CharacterModificationViewModel CreateCharacterModificationViewModel(Character character)
         {
-            return new CharacterModificationViewModel(_userStore, new Character(), _dbProvider, 
+            return new CharacterModificationViewModel(_userStore, character, _dbProvider, 
                 new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
         }
 
         private CharacterBrowserViewModel CreateCharacterBrowserViewModel()
         {
-            return new CharacterBrowserViewModel(_dbProvider,
-                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
+            return new CharacterBrowserViewModel(_userStore, _dbProvider,
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
+                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel));
         }
 
         private RegistrationViewModel CreateRegistrationViewModel()
