@@ -8,6 +8,21 @@
              Background="Black"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+	    <Grid.Resources>
+		    <Style TargetType="ListViewItem">
+			    <Style.Triggers>
+				    <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+					    <Setter Property="Background" Value="LightBlue" />
+				    </Trigger>
+				    <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                        <Setter Property="Background" Value="#75a8fa" />
+				    </Trigger>
+			    </Style.Triggers>
+		    </Style>
+		    <DataTemplate DataType="system:String">
+			    <!-- put your data template here -->
+		    </DataTemplate>
+	    </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10*"/>
@@ -24,42 +39,63 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="#f0eded"
-                CornerRadius="8">
+                CornerRadius="16">
+            <Grid>
+	            <Grid.RowDefinitions>
+		            <RowDefinition Height="20*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ListView Name="CharactersList"
+	                      ItemsSource="{Binding SimplifiedCharacterList}"
+	                      SelectionMode="Single"
+	                      IsSynchronizedWithCurrentItem="True"
+                          SelectedItem="{Binding SelectedCharacter}"
+	                      AlternationCount="2"
+	                      FontSize="20"
+                          Margin="0 0 0 15">
+		            <ListView.View>
+			            <GridView>
+				            <GridViewColumn Header="Name" Width="220">
+					            <GridViewColumn.CellTemplate>
+						            <DataTemplate>
+							            <Border Height="70">
+								            <Label Content="{Binding Name}" VerticalAlignment="Center"></Label>
+							            </Border>
+						            </DataTemplate>
+					            </GridViewColumn.CellTemplate>
+				            </GridViewColumn>
+				            <GridViewColumn Header="Level" Width="220" DisplayMemberBinding="{Binding Level}" />
+				            <GridViewColumn Header="Class" Width="220" DisplayMemberBinding="{Binding Class}" />
+				            <GridViewColumn Header="Background" Width="220" DisplayMemberBinding="{Binding Background}" />
+				            <GridViewColumn Header="Race" Width="220" DisplayMemberBinding="{Binding Race}" />
+				            <GridViewColumn Header="Alignment" Width="220" DisplayMemberBinding="{Binding Alignment}">
+				            </GridViewColumn>
+			            </GridView>
+		            </ListView.View>
+	            </ListView>
+                <StackPanel 
+							Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="1">
+                    <Button Height="40" Width="150"
+                            Content="Edit"
+                            FontSize="25"
+                            Margin="10, 0, 10, 0"
+                            Command="{Binding EditCharacterCommand}"/>
+                    <Button Height="40" Width="150"
+                            Content="Delete"
+                            FontSize="25"
+                            Margin="10, 0, 10, 0"
+                            Command="{Binding DeleteCharacterCommand}"/>
+                    <Button Height="40" Width="150"
+                            Content="Back"
+                            FontSize="25"
+                            Margin="10, 0, 10, 0"
+                            Command="{Binding GoBackCommand}"/>
+                </StackPanel>
+            </Grid>
             
-	        <ListView Name="CharactersList"
-                      ItemsSource="{Binding SimplifiedCharacterList}" SelectionMode="Single">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name" Width="120">
-	                        <GridViewColumn.CellTemplate>
-		                        <DataTemplate>
-                                    <Border Height="50"
-                                            Width="110"
-			                                HorizontalAlignment="Stretch"
-			                                VerticalAlignment="Stretch"
-                                            BorderThickness="3">
-                                        <Border.BorderBrush>
-		                                    <LinearGradientBrush EndPoint="1,1" StartPoint="1,0">
-			                                    <GradientStop Color="White" Offset="0"/>
-			                                    <GradientStop Color="White" Offset="0.5"/>
-			                                    <GradientStop Color="Green" Offset="0.75"/>
-			                                    <GradientStop Color="Green" Offset="1"/>
-		                                    </LinearGradientBrush>
-	                                    </Border.BorderBrush>
-                                        <Label Content="{Binding Name}"
-                                               Foreground="yellow"></Label>
-                                    </Border>
-                                </DataTemplate>
-	                        </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                         <GridViewColumn Header="Level" Width="120" DisplayMemberBinding="{Binding Level}" />
-                         <GridViewColumn Header="Class" Width="120" DisplayMemberBinding="{Binding Class}" />
-                        <GridViewColumn Header="Background" Width="120" DisplayMemberBinding="{Binding Background}" />
-                        <GridViewColumn Header="Race" Width="120" DisplayMemberBinding="{Binding Race}" />
-                        <GridViewColumn Header="Alignment" Width="120" DisplayMemberBinding="{Binding Alignment}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+	        
             
             
         </Border>

@@ -13,6 +13,8 @@ namespace DnDManager.Models
         private readonly int _id = -1000;
 
         private int _level;
+
+        public int Id => _id;
         public string CharacterName { get; set; }
         public string CharacterClass { get; set; }
         public string Background { get; set; }

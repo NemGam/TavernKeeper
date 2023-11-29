@@ -63,5 +63,10 @@ namespace DnDManager.Models
         {
             return new NpgsqlConnection(connectionString);
         }
+
+        public void DeleteCharacter()
+        {
+
+        }
     }
 }

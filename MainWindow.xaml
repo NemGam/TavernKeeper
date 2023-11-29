@@ -13,7 +13,7 @@
         MinHeight="450"
         ResizeMode="CanResize" Icon="/Resources/Icons/DnDManagerIcon.png">
     <Window.Resources>
-	    <math:MathConverter x:Key="Math"/>
+        <math:MathConverter x:Key="Math"/>
     </Window.Resources>
     <Grid>
         <Grid.Resources>

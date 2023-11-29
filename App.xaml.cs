@@ -29,10 +29,22 @@ namespace DnDManager
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //_navigationStore.CurrentViewModel = CreateLoginViewModel();
-            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel();
+            //TEMP
+            const bool def = true;
+            if (true)
+            {
+                _navigationStore.CurrentViewModel = CreateLoginViewModel();
+            }
+            else
+            {
+               
+            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel(_dbProvider,
+                new NavigationService<MainPlayerViewModel>(_navigationStore,
+                () => CreateMainPlayerViewModel()));
             
-            //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
+                //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
+            }
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)
@@ -45,21 +57,26 @@ namespace DnDManager
         {
             return new LoginViewModel(_dbProvider, _userStore,
                 new NavigationService<RegistrationViewModel>(_navigationStore, CreateRegistrationViewModel), 
-                new NavigationService<MainPlayerViewModel>(_navigationStore, 
-                () => CreateMainPlayerViewModel(_userStore)));
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
         }
 
-        private MainPlayerViewModel CreateMainPlayerViewModel(UserStore userStore)
+        private MainPlayerViewModel CreateMainPlayerViewModel()
         {
-            return new MainPlayerViewModel(userStore, 
-                new NavigationService<CharacterModificationViewModel>(_navigationStore, 
-                () => CreateCharacterModificationViewModel(userStore)));
+            return new MainPlayerViewModel(_userStore, 
+                new NavigationService<CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel),
+                new NavigationService<CharacterBrowserViewModel>(_navigationStore, CreateCharacterBrowserViewModel));
         }
 
-        private CharacterModificationViewModel CreateCharacterModificationViewModel(UserStore userStore)
+        private CharacterModificationViewModel CreateCharacterModificationViewModel()
         {
-            return new CharacterModificationViewModel(userStore, new Models.Character(), new Models.DatabaseProvider(), 
-                new NavigationService<MainPlayerViewModel>(_navigationStore, () => CreateMainPlayerViewModel(_userStore)));
+            return new CharacterModificationViewModel(_userStore, new Character(), _dbProvider, 
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
+        }
+
+        private CharacterBrowserViewModel CreateCharacterBrowserViewModel()
+        {
+            return new CharacterBrowserViewModel(_dbProvider,
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
         }
 
         private RegistrationViewModel CreateRegistrationViewModel()

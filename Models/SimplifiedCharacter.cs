@@ -14,7 +14,7 @@ namespace DnDManager.Models
     {
         private int _id;
         
-        public int ID { get { return _id; } }
+        public int ID => _id;
         public string Name { get; }
         public int Level { get; }
         public string Class { get; }

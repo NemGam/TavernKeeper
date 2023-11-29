@@ -213,7 +213,7 @@ namespace DnDManager.ViewModels
             Alignment.ChaoticEvil
         };
 
-        public string PlayerName => _userStore.CurrentUser.FirstName!;
+        public string PlayerName => _userStore.CurrentUser.FirstName is not null? _userStore.CurrentUser.FirstName : "ERROR ERROR";
 
         #region NumbersProperties
 

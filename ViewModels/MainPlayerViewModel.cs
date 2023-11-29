@@ -13,7 +13,8 @@ namespace DnDManager.ViewModels
 		{
 			get
 			{
-				return $"Hello, {_userStore.CurrentUser.FirstName}!";
+				return _userStore.CurrentUser is not null? 
+					$"Hello, {_userStore.CurrentUser.FirstName}!" : "ERROR: CURRENT USER IS NULL";
 			}
 			set
 			{ 
@@ -22,15 +23,18 @@ namespace DnDManager.ViewModels
 		}
 
 		public NavigateCommand<CharacterModificationViewModel> CreateCharacterCommand { get; }
-		public NavigateCommand<ViewModelBase> BrowseCharacterCommand { get; }
+		public NavigateCommand<CharacterBrowserViewModel> BrowseCharacterCommand { get; }
         public NavigateCommand<ViewModelBase> ContinueGameCommand { get; }
         public NavigateCommand<ViewModelBase> BrowseGameCommand { get; }
 
         public MainPlayerViewModel(UserStore userStore, 
-			NavigationService<CharacterModificationViewModel> characterModificationNS)
+			NavigationService<CharacterModificationViewModel> characterModificationNS,
+			NavigationService<CharacterBrowserViewModel> characterBrowserNS
+			)
         {
 			_userStore = userStore;
 			CreateCharacterCommand = new NavigateCommand<CharacterModificationViewModel>(characterModificationNS);
+            BrowseCharacterCommand = new NavigateCommand<CharacterBrowserViewModel>(characterBrowserNS);
         }
 
 
