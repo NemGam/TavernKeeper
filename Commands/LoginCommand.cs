@@ -34,6 +34,7 @@ namespace DnDManager.Commands
 
         ~LoginCommand()
         {
+            Debug.WriteLine("Disposed");
             _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
         }
 
