@@ -265,6 +265,7 @@ namespace DnDManager.ViewModels
         }
 
         public SubmitCharacterCommand SubmitCharacterCommand { get; }
+        public NavigateCommand<MainPlayerViewModel> CancelCommand { get; }
 
         public CharacterModificationViewModel(UserStore userStore, Models.Character character, 
             DatabaseProvider databaseProvider, NavigationService<MainPlayerViewModel> MainPlayerViewModelNS)
@@ -272,6 +273,7 @@ namespace DnDManager.ViewModels
             _userStore = userStore;
             _character = character;
             SubmitCharacterCommand = new SubmitCharacterCommand(this, MainPlayerViewModelNS, databaseProvider);
+            CancelCommand = new NavigateCommand<MainPlayerViewModel>(MainPlayerViewModelNS);
         }
 
     }

@@ -37,7 +37,7 @@ namespace DnDManager.ViewModels
             NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
         {
             _loginProvider = new LoginProvider(DBProvider);
-            LoginCommand = new LoginCommand(this, userStore, mainPlayerViewModelNS);
+            LoginCommand = new LoginCommand(this, userStore, DBProvider, mainPlayerViewModelNS);
             GoToRegistrationCommand = new NavigateCommand<RegistrationViewModel>(registrationViewModelNS);
         }
 

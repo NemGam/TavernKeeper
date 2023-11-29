@@ -1,4 +1,5 @@
 ﻿using DnDManager.Commands;
+using DnDManager.Models;
 using DnDManager.Services;
 using System;
 using System.Collections.Generic;
@@ -70,9 +71,10 @@ namespace DnDManager.ViewModels
         public ICommand RegisterCommand { get; }
         public NavigateCommand<LoginViewModel> GoToLoginCommand { get; }
 
-        public RegistrationViewModel(NavigationService<LoginViewModel> loginViewNavigationService)
+        public RegistrationViewModel(DatabaseProvider databaseProvider,
+			NavigationService<LoginViewModel> loginViewNavigationService)
         {
-			RegisterCommand = new RegisterCommand(this, new Models.DatabaseProvider());
+			RegisterCommand = new RegisterCommand(this, databaseProvider);
 			GoToLoginCommand = new NavigateCommand<LoginViewModel>(loginViewNavigationService);
         }
     }

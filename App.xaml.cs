@@ -24,7 +24,7 @@ namespace DnDManager
         {
             _navigationStore = new NavigationStore();
             _userStore = new UserStore();
-            _dbProvider = new DatabaseProvider();
+            _dbProvider = DatabaseProvider.Create();
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -81,7 +81,8 @@ namespace DnDManager
 
         private RegistrationViewModel CreateRegistrationViewModel()
         {
-            return new RegistrationViewModel(new NavigationService<LoginViewModel>(_navigationStore, CreateLoginViewModel));
+            return new RegistrationViewModel(_dbProvider,
+                new NavigationService<LoginViewModel>(_navigationStore, CreateLoginViewModel));
         }
     }
 }

@@ -553,7 +553,8 @@
             <Button Width="136" Height="28" 
                     Canvas.Left="1078" Canvas.Top="1546" 
                     Content="Cancel"
-                    FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    FontSize="16"
+                    Command="{Binding CancelCommand}"/>
 
 
         </Canvas>
