@@ -55,7 +55,7 @@ namespace DnDManager.ViewModels
 
         private async void FillCharactersList()
         {
-            string sql = "SELECT * FROM simplified_chracters_view WHERE owner_username = @username";
+            string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
             SimplifiedCharacterList = 
                  new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql, new {username = _userStore.CurrentUser.UserName}));
         }
