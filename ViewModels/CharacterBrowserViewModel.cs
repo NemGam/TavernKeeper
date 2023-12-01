@@ -3,11 +3,8 @@ using DnDManager.Models;
 using DnDManager.Services;
 using DnDManager.Stores;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DnDManager.ViewModels
@@ -41,7 +38,15 @@ namespace DnDManager.ViewModels
         public void RemoveSelectedCharacter(Int64 id)
         {
             if (_selectedCharacter is null) return;
-            SimplifiedCharacterList.Remove(_selectedCharacter);
+            try
+            {
+                _simplifiedCharacterList.Remove(_selectedCharacter);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            
             //_databaseProvider.DeleteCharacter(id);
             SelectedCharacter = null;
         }
@@ -55,19 +60,16 @@ namespace DnDManager.ViewModels
         {
             _userStore = userStore;
             _databaseProvider = databaseProvider;
-            FillCharactersList();
-            
+            Task.Run(async () =>
+            {
+                string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
+                SimplifiedCharacterList =
+                     new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql, 
+                     new { username = _userStore.CurrentUser.UserName }));
+            });
             GoBackCommand = new NavigateCommand<MainPlayerViewModel>(mainPlayerViewModelNS);
             EditCharacterCommand = new EditCharacterCommand(this, databaseProvider, characterModPNS);
-            DeleteCharacterCommand = new DeleteCharacterCommand(this);
-        }
-
-        private async void FillCharactersList()
-        {
-            string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
-            SimplifiedCharacterList = 
-                 new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql, new {username = _userStore.CurrentUser.UserName}));
-            Debug.WriteLine(SimplifiedCharacterList[0].Name);
+            DeleteCharacterCommand = new DeleteCharacterCommand(this, databaseProvider);
         }
     }
 }
