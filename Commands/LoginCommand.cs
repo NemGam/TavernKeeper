@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Net;
+using DnDManager.Helpers;
 
 namespace DnDManager.Commands
 {
@@ -21,7 +23,6 @@ namespace DnDManager.Commands
         private readonly UserStore _userStore;
         private readonly NavigationService<MainPlayerViewModel> _mainPlayerViewNS;
         private readonly DatabaseProvider _databaseProvider;
-        private bool isLoading = false;
         
 
         public LoginCommand(LoginViewModel loginViewModel, UserStore userStore, DatabaseProvider databaseProvider,
@@ -37,7 +38,9 @@ namespace DnDManager.Commands
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(LoginViewModel.UserName) || e.PropertyName == nameof(LoginViewModel.Password)) 
+            if (e.PropertyName == nameof(LoginViewModel.UserName) 
+                || e.PropertyName == nameof(LoginViewModel.Password)
+                || e.PropertyName == nameof(LoginViewModel.IsBusy))
             {
                 OnCanExecuteChanged(null);
             }
@@ -53,13 +56,24 @@ namespace DnDManager.Commands
 
         private async void Login(PasswordBox box)
         {
+            _loginViewModel.IsBusy = true;
             bool authenticated = true;
-            isLoading = true;
-            string sql = "SELECT check_password(@username, @pass)";
-            var s = await _databaseProvider!.GetAsync<bool>(sql,
-                    new { username = _loginViewModel!.UserName!, pass = box.Password });
-            if (s == null || s.Count == 0) authenticated = false;
-            else authenticated = s[0];
+            byte[] salt;
+            string sql = "SELECT pass_salt FROM users WHERE username = @username";
+            var s = await _databaseProvider!.GetAsync<string>(sql,
+                    new { username = _loginViewModel!.UserName!});
+            if (s == null || s.Count == 0) {
+                _loginViewModel.SetFailedAuthentication();
+                _loginViewModel.IsBusy = false;
+                return;
+            }
+            salt = Convert.FromHexString(s[0]);
+            string hashedPass = AuthenticationHelper.HashString(box.Password, salt);
+            sql = "SELECT check_password(@username, @pass)";
+            var s1 = await _databaseProvider!.GetAsync<bool>(sql,
+                    new { username = _loginViewModel!.UserName!, pass = hashedPass });
+            if (s1 == null || s1.Count == 0) authenticated = false;
+            else authenticated = s1[0];
             if (authenticated)
             {
                 //Get first name from the users table
@@ -71,14 +85,14 @@ namespace DnDManager.Commands
             {
                 _loginViewModel.SetFailedAuthentication();
                 MessageBox.Show("Good try, Krish, I've added security, use tester as password");
-                isLoading = false;
+                _loginViewModel.IsBusy = false;
             }
         }
 
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrEmpty(_loginViewModel.UserName)
-                && !isLoading
+                && !_loginViewModel.IsBusy
                 && base.CanExecute(parameter);
         }
     }

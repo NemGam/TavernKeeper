@@ -12,6 +12,29 @@ namespace DnDManager.ViewModels
 {
     class RegistrationViewModel : ViewModelBase
     {
+		private bool _failedRegistration = false;
+		private bool _isBusy = false;
+        public bool IsBusy
+		{
+			get => _isBusy;
+			set
+			{
+				_isBusy = value;
+				OnPropertyChanged(nameof(IsBusy));
+			}
+		}
+        public bool FailedRegistration
+		{
+			get => _failedRegistration;
+			set 
+			{
+                _failedRegistration = value;
+				OnPropertyChanged(nameof(FailedRegistration));
+            }
+
+        }
+
+
 		private string? _firstName;
 		public string? FirstName
         {
@@ -68,14 +91,19 @@ namespace DnDManager.ViewModels
 			}
 		}
 
-        public ICommand RegisterCommand { get; }
+        public RegisterCommand RegisterCommand { get; }
         public NavigateCommand<LoginViewModel> GoToLoginCommand { get; }
 
         public RegistrationViewModel(DatabaseProvider databaseProvider,
 			NavigationService<LoginViewModel> loginViewNavigationService)
         {
-			RegisterCommand = new RegisterCommand(this, databaseProvider);
+			RegisterCommand = new RegisterCommand(this, databaseProvider, loginViewNavigationService);
 			GoToLoginCommand = new NavigateCommand<LoginViewModel>(loginViewNavigationService);
+        }
+
+        public void SetFailedRegistration()
+        {
+            FailedRegistration = true;
         }
     }
 }

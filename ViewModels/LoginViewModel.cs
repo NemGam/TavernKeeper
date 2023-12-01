@@ -8,7 +8,27 @@ namespace DnDManager.ViewModels
 {
     internal class LoginViewModel : ViewModelBase
     {
-        public bool FailedAuthentication { get; private set; }
+        private bool _failedAuthentication = false;
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                _isBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        }
+        public bool FailedAuthentication
+        {
+            get => _failedAuthentication;
+            set
+            {
+                _failedAuthentication = value;
+                OnPropertyChanged(nameof(FailedAuthentication));
+            }
+
+        }
 
         
 
@@ -44,6 +64,7 @@ namespace DnDManager.ViewModels
 
         public void SetFailedAuthentication()
         {
+            IsBusy = false;
             FailedAuthentication = true;
         }
 
