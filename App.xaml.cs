@@ -30,14 +30,14 @@ namespace DnDManager
         protected override void OnStartup(StartupEventArgs e)
         {
             //TEMP
-            const bool def = true;
+            const bool def = false;
             if (def)
             {
                 _navigationStore.CurrentViewModel = CreateLoginViewModel();
             }
             else
             {
-                _userStore.CurrentUser = new User("Vlad", "Shit");
+                _userStore.CurrentUser = new User("Vlad", "Test");
                 _navigationStore.CurrentViewModel = new GamesBrowserViewModel(_userStore, _dbProvider,
                     new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
             
