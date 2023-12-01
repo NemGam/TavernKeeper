@@ -9,7 +9,7 @@ namespace DnDManager.Models
     public class User
     {
         public string? UserName { get; private set; }
-        public string? FirstName { get; private set; }
+        public string? FirstName { get;  set; }
 
         public User(string userName, string firstName)
         {

@@ -76,15 +76,18 @@ namespace DnDManager.Commands
             else authenticated = s1[0];
             if (authenticated)
             {
-                //Get first name from the users table
-                _userStore.CurrentUser = new User(_loginViewModel.UserName!, "Test");
+                
                 _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+                sql = "SELECT first_name FROM users WHERE username = @username";
+                var s2 = await _databaseProvider!.GetAsync<string>(sql,
+                    new { username = _loginViewModel.UserName!});
+                string fname = s2[0];
+                _userStore.CurrentUser = new User(_loginViewModel.UserName!, fname);
                 _mainPlayerViewNS.Navigate();
             }
             else
             {
                 _loginViewModel.SetFailedAuthentication();
-                MessageBox.Show("Good try, Krish, I've added security, use tester as password");
                 _loginViewModel.IsBusy = false;
             }
         }

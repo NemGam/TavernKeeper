@@ -13,6 +13,12 @@
     <Compile Update="Views\CharacterModificationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\GamesBrowserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\GameView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +37,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CharacterModificationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GamesBrowserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GameView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LoginView.xaml">

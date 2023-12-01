@@ -31,16 +31,15 @@ namespace DnDManager
         {
             //TEMP
             const bool def = true;
-            if (true)
+            if (def)
             {
                 _navigationStore.CurrentViewModel = CreateLoginViewModel();
             }
             else
             {
-               
-            _navigationStore.CurrentViewModel = new CharacterBrowserViewModel(_userStore, _dbProvider,
-                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
-                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel));
+                _userStore.CurrentUser = new User("Vlad", "Shit");
+                _navigationStore.CurrentViewModel = new GamesBrowserViewModel(_userStore, _dbProvider,
+                    new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
             
                 //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
             }

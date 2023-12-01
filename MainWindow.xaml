@@ -32,6 +32,9 @@
 	        <DataTemplate DataType ="{x:Type vms:CharacterBrowserViewModel}">
                 <views:CharacterBrowserView/>
 	        </DataTemplate>
+	        <DataTemplate DataType ="{x:Type vms:GamesBrowserViewModel}">
+		        <views:GamesBrowserView/>
+	        </DataTemplate>
         </Grid.Resources>
         <ContentControl Content ="{Binding CurrentViewModel}"/>
     </Grid>
