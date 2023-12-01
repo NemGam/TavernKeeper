@@ -30,7 +30,7 @@ namespace DnDManager
         protected override void OnStartup(StartupEventArgs e)
         {
             //TEMP
-            const bool def = false;
+            const bool def = true;
             if (def)
             {
                 _navigationStore.CurrentViewModel = CreateLoginViewModel();
