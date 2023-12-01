@@ -19,7 +19,7 @@ namespace DnDManager.Services
             _createViewModel = createViewModel;
         }
 
-        public void Navigate(TParameter parameter)
+        public void Navigate(TParameter? parameter)
         {
             _navigationStore.CurrentViewModel = _createViewModel(parameter);
         }

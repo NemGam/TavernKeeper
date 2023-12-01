@@ -1,4 +1,5 @@
-﻿using DnDManager.Models;
+﻿using Dapper;
+using DnDManager.Models;
 using DnDManager.Services;
 using DnDManager.Stores;
 using DnDManager.ViewModels;
@@ -50,10 +51,19 @@ namespace DnDManager.Commands
                     }
                     else
                     {
-                        Debug.WriteLine(_characterModificationViewModel.GetCharacterInfo());
-                        //EDIT
+                        string sql = "UPDATE characters SET character_name = @character_name, character_class = @character_class, level = @level, " +
+                        "background = @background, alignment = @alignment, strength_score = @strength_score, dexterity_score = @dexterity_score, " +
+                        "constitution_score = @constitution_score, intelligence_score = @intelligence_score, wisdom_score = @wisdom_score, " +
+                        "charisma_score = @charisma_score, saving_throws = @saving_throws, skills = @skills, race = @race, owner_username = @owner_username, " +
+                        "speed = @speed, armor_class = @armor_class, max_hp = @max_hp, current_hp = @current_hp, temp_hp = @temp_hp, hit_dice = @hit_dice, " +
+                        "inspiration = @inspiration, attacks_spells = @attacks_spells, equipment = @equipment, flaws = @flaws, ideals = @ideals, bonds = @bonds, " +
+                        "personality_traits = @personality_traits, features_traits = @features_traits, proficiencies_languages = @proficiencies_languages, experience_points = @experience_points " +
+                        "WHERE id = @id;";
+                        var param = CreateParameters();
+                        param.Add("id", _character.Id, System.Data.DbType.Int64);
+
+                        await _databaseProvider.PostAsync(sql, param);
                         _MainPlayerViewModelNS.Navigate();
-                        //_databaseProvider.Send();
                     }
                 }
                 catch (Exception ex)
@@ -63,42 +73,40 @@ namespace DnDManager.Commands
             });
 
         }
-        private object CreateParameters()
+        private DynamicParameters CreateParameters()
         {
-            var parameters = new
-            {
-                character_name = _characterModificationViewModel.CharacterName,
-                character_class = _characterModificationViewModel.CharacterClass,
-                level = _characterModificationViewModel.Level,
-                background = _characterModificationViewModel.Background,
-                alignment = _characterModificationViewModel.ChosenAlignment,
-                strength_score = _characterModificationViewModel.Abilities.Strength.Value,
-                dexterity_score = _characterModificationViewModel.Abilities.Dexterity.Value,
-                constitution_score = _characterModificationViewModel.Abilities.Constitution.Value,
-                intelligence_score = _characterModificationViewModel.Abilities.Intelligence.Value,
-                wisdom_score = _characterModificationViewModel.Abilities.Wisdom.Value,
-                charisma_score = _characterModificationViewModel.Abilities.Charisma.Value,
-                saving_throws = _characterModificationViewModel.ProficientSavingThrows,
-                skills = _characterModificationViewModel.ProficientSkills,
-                race = _characterModificationViewModel.Race,
-                owner_username = _userStore.CurrentUser.UserName,
-                speed = _characterModificationViewModel.Speed,
-                armor_class = _characterModificationViewModel.ArmorClass,
-                max_hp = _characterModificationViewModel.MaxHP,
-                current_hp = _characterModificationViewModel.CurrHP,
-                temp_hp = _characterModificationViewModel.TempHP,
-                hit_dice = _characterModificationViewModel.HitDice,
-                inspiration = _characterModificationViewModel.Inspiration,
-                attacks_spells = _characterModificationViewModel.AtkSplSummary,
-                equipment = _characterModificationViewModel.Equipment,
-                flaws = _characterModificationViewModel.Flaws,
-                ideals = _characterModificationViewModel.Ideals,
-                bonds = _characterModificationViewModel.Bonds,
-                personality_traits = _characterModificationViewModel.PersonalityTraits,
-                features_traits = _characterModificationViewModel.FeaturesTraits,
-                proficiencies_languages = _characterModificationViewModel.ProfAndLang,
-                experience_points = _characterModificationViewModel.EXP
-            };
+            var parameters = new DynamicParameters();
+            parameters.Add("character_name", _characterModificationViewModel.CharacterName, System.Data.DbType.String);
+            parameters.Add("character_class", _characterModificationViewModel.CharacterClass, System.Data.DbType.String);
+            parameters.Add("level", _characterModificationViewModel.Level, System.Data.DbType.Int16);
+            parameters.Add("background", _characterModificationViewModel.Background, System.Data.DbType.String);
+            parameters.Add("alignment", _characterModificationViewModel.ChosenAlignment, System.Data.DbType.Int32);
+            parameters.Add("strength_score", _characterModificationViewModel.Abilities.Strength.Value, System.Data.DbType.Int32);
+            parameters.Add("dexterity_score", _characterModificationViewModel.Abilities.Dexterity.Value, System.Data.DbType.Int32);
+            parameters.Add("constitution_score", _characterModificationViewModel.Abilities.Constitution.Value, System.Data.DbType.Int32);
+            parameters.Add("intelligence_score", _characterModificationViewModel.Abilities.Intelligence.Value, System.Data.DbType.Int32);
+            parameters.Add("wisdom_score", _characterModificationViewModel.Abilities.Wisdom.Value, System.Data.DbType.Int32);
+            parameters.Add("charisma_score", _characterModificationViewModel.Abilities.Charisma.Value, System.Data.DbType.Int32);
+            parameters.Add("saving_throws", _characterModificationViewModel.ProficientSavingThrows, System.Data.DbType.Int32);
+            parameters.Add("skills", _characterModificationViewModel.ProficientSkills, System.Data.DbType.Int32);
+            parameters.Add("race", _characterModificationViewModel.Race, System.Data.DbType.String);
+            parameters.Add("owner_username", _userStore.CurrentUser.UserName, System.Data.DbType.String);
+            parameters.Add("speed", _characterModificationViewModel.Speed, System.Data.DbType.Int32);
+            parameters.Add("armor_class", _characterModificationViewModel.ArmorClass, System.Data.DbType.Int32);
+            parameters.Add("max_hp", _characterModificationViewModel.MaxHP, System.Data.DbType.Int32);
+            parameters.Add("current_hp", _characterModificationViewModel.CurrHP, System.Data.DbType.Int32);
+            parameters.Add("temp_hp", _characterModificationViewModel.TempHP, System.Data.DbType.Int32);
+            parameters.Add("hit_dice", _characterModificationViewModel.HitDice, System.Data.DbType.String);
+            parameters.Add("inspiration", _characterModificationViewModel.Inspiration, System.Data.DbType.Int32);
+            parameters.Add("attacks_spells", _characterModificationViewModel.AtkSplSummary, System.Data.DbType.String);
+            parameters.Add("equipment", _characterModificationViewModel.Equipment, System.Data.DbType.String);
+            parameters.Add("flaws", _characterModificationViewModel.Flaws, System.Data.DbType.String);
+            parameters.Add("ideals", _characterModificationViewModel.Ideals, System.Data.DbType.String);
+            parameters.Add("bonds", _characterModificationViewModel.Bonds, System.Data.DbType.String);
+            parameters.Add("personality_traits", _characterModificationViewModel.PersonalityTraits, System.Data.DbType.String);
+            parameters.Add("features_traits", _characterModificationViewModel.FeaturesTraits, System.Data.DbType.String);
+            parameters.Add("proficiencies_languages", _characterModificationViewModel.ProfAndLang, System.Data.DbType.String);
+            parameters.Add("experience_points", _characterModificationViewModel.EXP, System.Data.DbType.Int32);
             return parameters;
         }
     }

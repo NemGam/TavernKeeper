@@ -17,7 +17,6 @@ namespace DnDManager.ViewModels
     class CharacterModificationViewModel : ViewModelBase
     {
         private readonly Models.Character? _character;
-        private Character _initialCharacter;
         private readonly UserStore _userStore;
 
         private Abilities _abilities;
@@ -235,7 +234,7 @@ namespace DnDManager.ViewModels
         public string AtkSplOverall { get; set; }
         
         //DB final string
-        public string AtkSplSummary => $"{AtkSpl1}~ {AtkSpl2}~ {AtkSpl3}~ {AtkSplOverall}~";
+        public string AtkSplSummary => $"{AtkSpl1}#{AtkSpl2}#{AtkSpl3}#{AtkSplOverall}";
 
         //Equipment fields
 
@@ -247,7 +246,7 @@ namespace DnDManager.ViewModels
         public string EquipmentBody { get; set; }
 
         //DB final string
-        public string Equipment => $"{CP}~ {SP}~ {EP}~ {GP}~ {PP}~ {EquipmentBody}~";
+        public string Equipment => $"{CP}#{SP}#{EP}#{GP}#{PP}#{EquipmentBody}";
         public string Flaws { get; set; }
         public string Ideals { get; set; }
         public string Bonds { get; set; }
@@ -339,15 +338,62 @@ namespace DnDManager.ViewModels
             _abilities = new Abilities();
             _userStore = userStore;
             _character = character;
-            SubmitCharacterCommand = new SubmitCharacterCommand(_userStore, this, MainPlayerViewModelNS, databaseProvider, _character);
+            if (character is null)
+            {
+                SubmitCharacterCommand = new SubmitCharacterCommand(_userStore, this, MainPlayerViewModelNS, databaseProvider, new Character(DEFAULTID));
+            }
+            else
+            {
+                LoadFromCharacter(character);
+                SubmitCharacterCommand = new SubmitCharacterCommand(_userStore, this, MainPlayerViewModelNS, databaseProvider, character);
+            }
             CancelCommand = new NavigateCommand<MainPlayerViewModel>(MainPlayerViewModelNS);
 
-            if (character is not null) LoadFromCharacter(character);
         }
 
         private void LoadFromCharacter(Character character)
         {
-            
+            CharacterName = character.CharacterName;
+            CharacterClass = character.CharacterClass;
+            Level = character.Level;
+            Background = character.Background;
+            ChosenAlignment = character.ChosenAlignment;
+            Abilities.Strength.Value = character.abilities.Strength.Value;
+            Abilities.Dexterity.Value = character.abilities.Dexterity.Value;
+            Abilities.Constitution.Value = character.abilities.Constitution.Value;
+            Abilities.Intelligence.Value = character.abilities.Intelligence.Value;
+            Abilities.Charisma.Value = character.abilities.Charisma.Value;
+            Abilities.Wisdom.Value = character.abilities.Wisdom.Value;
+            ProficientSavingThrows = character.ProficientSavingThrows;
+            ProficientSkills = character.ProficientSkills;
+            Race = character.Race;
+            Speed = character.Speed;
+            ArmorClass = character.ArmorClass;
+            MaxHP = character.MaxHP;
+            CurrHP = character.CurrHP;
+            TempHP = character.TempHP;
+            HitDice = character.HitDice;
+            Inspiration = character.Inspiration;
+            string[] attacks_spells = character.AtkSplSummary.Split('#');
+            AtkSpl1 = attacks_spells[0];
+            AtkSpl2 = attacks_spells[1];
+            AtkSpl3 = attacks_spells[2];
+            AtkSplOverall = attacks_spells[3];
+
+            string[] equipment = character.Equipment.Split('#');
+            EquipmentBody = equipment[0];
+            CP = equipment[1];
+            SP = equipment[2];
+            EP = equipment[3];
+            GP = equipment[4];
+            PP = equipment[5];
+            Flaws = character.Flaws;
+            Ideals = character.Ideals;
+            Bonds = character.Bonds;
+            PersonalityTraits = character.PersonalityTraits;
+            FeaturesTraits = character.FeaturesTraits;
+            ProfAndLang = character.ProfAndLang;
+            EXP = character.EXP;
         }
     }
 }

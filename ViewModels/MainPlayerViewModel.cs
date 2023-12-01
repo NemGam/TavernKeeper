@@ -35,7 +35,7 @@ namespace DnDManager.ViewModels
         {
 			_userStore = userStore;
 			CreateCharacterCommand = new ParameterNavigateCommand<Character, CharacterModificationViewModel>
-				(characterModificationNS, new Character());
+				(characterModificationNS, null);
             BrowseCharacterCommand = new NavigateCommand<CharacterBrowserViewModel>(characterBrowserNS);
         }
 

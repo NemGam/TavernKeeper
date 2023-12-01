@@ -3,6 +3,7 @@ using DnDManager.Services;
 using DnDManager.ViewModels;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace DnDManager.Commands
@@ -35,8 +36,15 @@ namespace DnDManager.Commands
             _characterBrowserVM.PropertyChanged -= OnViewModelPropertyChanged;
             finalizing = true;
             Task.Run(async () => {
+                Debug.WriteLine(_characterBrowserVM.SelectedCharacter!.ID);
                 var character = await _databaseProvider.GetAsync<Character>(
                 "SELECT * FROM characters WHERE characters.id = @id", new { id = _characterBrowserVM.SelectedCharacter!.ID});
+                if (character is null) 
+                {
+                    Debug.WriteLine("No characters were found");
+                    return;
+                }
+                Debug.WriteLine(character.Count);
                 _characterModPNS.Navigate(character[0]);
             });
         }

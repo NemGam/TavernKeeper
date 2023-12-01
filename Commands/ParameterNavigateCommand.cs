@@ -7,7 +7,7 @@ namespace DnDManager.Commands
         where TViewModel : ViewModelBase
     {
         private readonly ParameterNavigationService<TParameter, TViewModel> _navigationService;
-        private readonly TParameter _parameter;
+        private readonly TParameter? _parameter;
 
         public ParameterNavigateCommand(ParameterNavigationService<TParameter, TViewModel> navigationService, TParameter parameter)
         {

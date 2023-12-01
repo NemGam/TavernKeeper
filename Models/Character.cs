@@ -29,7 +29,13 @@ namespace DnDManager.Models
         public string HitDice { get; private set; }
         public string ProfAndLang { get; private set; }
 
-
+        public string Flaws { get; private set; }
+        public string Ideals { get; private set; }
+        public string Bonds { get; private set; }
+        public string PersonalityTraits { get; private set; }
+        public string FeaturesTraits { get; private set; }
+        public string AtkSplSummary { get; private set; }
+        public string Equipment { get; private set; }
         public int EXP
         {
             get { return _exp; }
@@ -152,19 +158,45 @@ namespace DnDManager.Models
                 throw new ArgumentException("collectionToCount must be enum type");
             return new BitArray(new[] { (int)(object)collectionToCount }).OfType<bool>().Count(x => x);
         }
-
-        public Character()
+        
+        public Character(long id, string character_name, string character_class, System.Int16 level, string background, 
+            int strength_score, int dexterity_score, int constitution_score, int intelligence_score, int wisdom_score, int charisma_score,
+            int saving_throws, int skills, string race, string owner_username, int speed, int armor_class, int max_hp, int current_hp, int temp_hp,
+            string hit_dice, int inspiration, string attacks_spells, string equipment, string flaws, string ideals, string bonds, string personality_traits,
+            string features_traits, string proficiencies_languages, int experience_points, int alignment)
         {
-            Abilities abilities = new();
-            Level = 1;
+            _id = id;
+            this.CharacterName = character_name;
+            this.CharacterClass = character_class;
+            this.Level = level;
+            this.Background = background;
+            abilities = new Abilities(strength_score, dexterity_score, constitution_score, intelligence_score, wisdom_score, charisma_score);
+            ProficientSavingThrows = (SavingThrows)saving_throws;
+            ProficientSkills = (Skills)skills;
+            this.Race = race;
+            this.Speed = speed;
+            this.ArmorClass = armor_class;
+            this.MaxHP = max_hp;
+            this.CurrHP = current_hp;
+            this.TempHP = temp_hp;
+            this.HitDice = hit_dice;
+            this.Inspiration = inspiration;
+            this.AtkSplSummary = attacks_spells;
+            this.Equipment = equipment;
+            this.Flaws = flaws;
+            this.Ideals = ideals;
+            this.Bonds = bonds;
+            this.PersonalityTraits = personality_traits;
+            this.FeaturesTraits = features_traits;
+            this.ProfAndLang = proficiencies_languages;
+            this.EXP = experience_points;
+            this.ChosenAlignment = (Alignment)alignment;
         }
 
-        public Character(int id, string characterName, string characterClass)
+        public Character(long id)
         {
             Abilities abilities = new();
             _id = id;
-            CharacterName = characterName;
-            CharacterClass = characterClass;
             Level = 1;
         }
 
