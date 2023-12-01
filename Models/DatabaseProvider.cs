@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace DnDManager.Models
 {
@@ -27,7 +29,9 @@ namespace DnDManager.Models
             Server={ConfigurationManager.AppSettings.Get("Server")};
             Port={ConfigurationManager.AppSettings.Get("Port")};
             Database={ConfigurationManager.AppSettings.Get("Database")}";
-            var source = NpgsqlDataSource.Create(connectionString);
+            var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+            dataSourceBuilder.MapEnum<Alignment>();
+            var source = dataSourceBuilder.Build();
             return new DatabaseProvider(source, connectionString);
         }
 
@@ -37,7 +41,6 @@ namespace DnDManager.Models
             _connectionString = connectionString;
             return;
         }
-
 
         /// <summary>
         /// Call procedure stored in the database.
@@ -102,8 +105,8 @@ namespace DnDManager.Models
             List<T> result;
             using (var connection = await _dataSource.OpenConnectionAsync())
             {
-                Debug.WriteLine(connection.Database);
                 result = (List<T>)await connection.QueryAsync<T>(sql, param);
+                Debug.WriteLine(result.Count);
             }
             
             return result;

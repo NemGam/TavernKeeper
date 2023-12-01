@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="DbCommands\" />
   </ItemGroup>
 
 </Project>

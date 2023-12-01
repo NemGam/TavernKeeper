@@ -16,14 +16,28 @@ namespace DnDManager.ViewModels
 {
     class CharacterModificationViewModel : ViewModelBase
     {
-        private readonly Models.Character _character;
+        private readonly Models.Character? _character;
+        private Character _initialCharacter;
         private readonly UserStore _userStore;
+
+        private Abilities _abilities;
+
+        private int _level;
+        private SavingThrows _proficientSavingThrows;
+        private Skills _proficientSkills;
+        private int _currHP;
+        private int _inspiration;
+        private int _exp;
+        private int _maxHP;
+        private int _speed;
+        private int _armorClass;
+
         public int Level
 		{
-			get => _character.Level;
+			get => _level;
 			set
 			{
-                _character.Level = value;
+                _level = Math.Clamp(value, 1, 20);
 				OnPropertyChanged(nameof(Level));
                 OnPropertyChanged(nameof(ProficiencyBonus));
                 NotifyAllSavingThrows();
@@ -31,12 +45,17 @@ namespace DnDManager.ViewModels
             }
 		}
 
+        public Abilities Abilities
+        {
+            get => _abilities;
+            set => _abilities = value;
+        }
         public int Strength
         {
-            get => _character.Strength.Value;
+            get => _abilities.Strength.Value;
             set
             {
-                _character.Strength.Value = value;
+                _abilities.Strength.Value = value;
                 OnPropertyChanged(nameof(Strength));
                 OnPropertyChanged(nameof(StrengthMod));
                 OnPropertyChanged(nameof(StrengthSavingThrowValue));
@@ -46,10 +65,10 @@ namespace DnDManager.ViewModels
 
         public int Dexterity
         {
-            get => _character.Dexterity.Value;
+            get => _abilities.Dexterity.Value;
             set
             {
-                _character.Dexterity.Value = value;
+                _abilities.Dexterity.Value = value;
                 OnPropertyChanged(nameof(Dexterity));
                 OnPropertyChanged(nameof(DexterityMod));
                 OnPropertyChanged(nameof(DexteritySavingThrowValue));
@@ -60,10 +79,10 @@ namespace DnDManager.ViewModels
 
         public int Constitution
         {
-            get => _character.Constitution.Value;
+            get => _abilities.Constitution.Value;
             set
             {
-                _character.Constitution.Value = value;
+                _abilities.Constitution.Value = value;
                 OnPropertyChanged(nameof(Constitution));
                 OnPropertyChanged(nameof(ConstitutionMod));
                 OnPropertyChanged(nameof(ConstitutionSavingThrowValue));
@@ -73,10 +92,10 @@ namespace DnDManager.ViewModels
 
         public int Intelligence
         {
-            get => _character.Intelligence.Value;
+            get => _abilities.Intelligence.Value;
             set
             {
-                _character.Intelligence.Value = value;
+                _abilities.Intelligence.Value = value;
                 OnPropertyChanged(nameof(Intelligence));
                 OnPropertyChanged(nameof(IntelligenceMod));
                 OnPropertyChanged(nameof(IntelligenceSavingThrowValue));
@@ -86,10 +105,10 @@ namespace DnDManager.ViewModels
 
         public int Wisdom
         {
-            get => _character.Wisdom.Value;
+            get => _abilities.Wisdom.Value;
             set
             {
-                _character.Wisdom.Value = value;
+                _abilities.Wisdom.Value = value;
                 OnPropertyChanged(nameof(Wisdom));
                 OnPropertyChanged(nameof(WisdomMod));
                 OnPropertyChanged(nameof(WisdomSavingThrowValue));
@@ -99,10 +118,10 @@ namespace DnDManager.ViewModels
 
         public int Charisma
         {
-            get => _character.Charisma.Value;
+            get => _abilities.Charisma.Value;
             set
             {
-                _character.Charisma.Value = value;
+                _abilities.Charisma.Value = value;
                 OnPropertyChanged(nameof(Charisma));
                 OnPropertyChanged(nameof(CharismaMod));
                 OnPropertyChanged(nameof(CharismaSavingThrowValue));
@@ -112,12 +131,12 @@ namespace DnDManager.ViewModels
 
         public SavingThrows ProficientSavingThrows
         {
-            get => _character.ProficientSavingThrows;
+            get => _proficientSavingThrows;
             set
             {
                 //Players are allowed to have only 2 or less proficient throws
-                if (CountEnabledFlags<SavingThrows>(value) > 2) return;
-                _character.ProficientSavingThrows = value;
+                if (CountEnabledFlags(value) > 2) return;
+                _proficientSavingThrows = value;
                 Debug.WriteLine(value);
                 OnPropertyChanged(nameof(ProficientSavingThrows));
                 NotifyAllSavingThrows();
@@ -126,10 +145,10 @@ namespace DnDManager.ViewModels
 
         public Skills ProficientSkills
         {
-            get => _character.ProficientSkills;
+            get => _proficientSkills;
             set
             {
-                _character.ProficientSkills = value;
+                _proficientSkills = value;
                 Debug.WriteLine(value);
                 OnPropertyChanged(nameof(ProficientSkills));
                 NotifyAllSkills();
@@ -161,71 +180,86 @@ namespace DnDManager.ViewModels
             OnPropertyChanged(nameof(PassiveWisdom));
         }
 
-        public string CharacterName
-        {
-            get => _character.CharacterName;
-            set => _character.CharacterName = value;
-        }
+        public string CharacterName { get; set; }
 
-        public string CharacterClass
-        {
-            get => _character.CharacterClass;
-            set => _character.CharacterClass = value;
-        }
+        public string CharacterClass { get; set; }
 
-        public string Background
-        {
-            get => _character.Background;
-            set => _character.Background = value;
-        }
+        public string Background { get; set; }
 
-        public string Race
-        {
-            get => _character.Race;
-            set => _character.Race = value;
-        }
+        public string Race { get;set; }
 
-        public Alignment ChosenAlignment
-        {
-            get => _character.ChosenAlignment;
-            set => _character.ChosenAlignment = value;
-        }
+        public Alignment ChosenAlignment { get;set; }
 
-        public string EXP
+        public int EXP
         {
-            get => _character.EXP;
-            set => _character.EXP = value;
+            get => _exp;
+            set => _exp = Math.Max(0, value);
         }
 
         public int ArmorClass
         {
-            get => _character.ArmorClass;
-            set => _character.ArmorClass = value;
+            get => _armorClass;
+            set => _armorClass = Math.Max(0, value);
         }
 
         public int Speed
         {
-            get => _character.Speed;
-            set => _character.Speed = value;
+            get => _speed;
+            set => _speed = Math.Max(0, value);
         }
+
+        public int MaxHP
+        {
+            get => _maxHP;
+            set => _maxHP = Math.Max(0, value);
+        }
+
+        public int CurrHP
+        {
+            get => _currHP;
+            set => _currHP = Math.Clamp(value, 0, MaxHP);
+        }
+
+        public int TempHP { get; set; }
 
         public int Inspiration
         {
-            get => _character.Inspiration;
-            set => _character.Inspiration = value;
+            get => _inspiration;
+            set => _inspiration = value;
         }
 
-        public string HitDice
-        {
-            get => _character.HitDice;
-            set => _character.HitDice = value;
-        }
+        //Attack and spells fields
+        public string AtkSpl1 { get; set; }
+        public string AtkSpl2 { get; set; }
+        public string AtkSpl3 { get; set; }
+        public string AtkSplOverall { get; set; }
+        
+        //DB final string
+        public string AtkSplSummary => $"{AtkSpl1}~ {AtkSpl2}~ {AtkSpl3}~ {AtkSplOverall}~";
 
-        public string ProfAndLang
-        {
-            get => _character.ProfAndLang;
-            set => _character.ProfAndLang = value;
-        }
+        //Equipment fields
+
+        public string CP { get; set; }
+        public string SP { get; set; }
+        public string EP { get; set; }
+        public string GP { get; set; }
+        public string PP { get; set; }
+        public string EquipmentBody { get; set; }
+
+        //DB final string
+        public string Equipment => $"{CP}~ {SP}~ {EP}~ {GP}~ {PP}~ {EquipmentBody}~";
+        public string Flaws { get; set; }
+        public string Ideals { get; set; }
+        public string Bonds { get; set; }
+        public string PersonalityTraits { get; set; }
+
+        public string FeaturesTraits { get; set; }
+
+
+
+        public string HitDice { get; set; }
+
+        public string ProfAndLang { get; set; }
 
         public Alignment[] PossibleAlignments => new Alignment[] {
             Alignment.LawfulGood,
@@ -243,44 +277,50 @@ namespace DnDManager.ViewModels
         #region Getters
 
         public string PlayerName => _userStore.CurrentUser.FirstName is not null? _userStore.CurrentUser.FirstName : "ERROR ERROR";
-        public int ProficiencyBonus => _character.ProficiencyBonus;
+        public int ProficiencyBonus => Character.CalculateProficiencyBonus(Level);
         public int Initiative => DexterityMod;
 
         //Abilities modifiers
-        public int StrengthMod => _character.Strength.Modifier;
-        public int DexterityMod => _character.Dexterity.Modifier;
-        public int ConstitutionMod => _character.Constitution.Modifier;
-        public int IntelligenceMod => _character.Intelligence.Modifier;
-        public int WisdomMod => _character.Wisdom.Modifier;
-        public int CharismaMod => _character.Charisma.Modifier;
+        public int StrengthMod => _abilities.Strength.Modifier;
+        public int DexterityMod => _abilities.Dexterity.Modifier;
+        public int ConstitutionMod => _abilities.Constitution.Modifier;
+        public int IntelligenceMod => _abilities.Intelligence.Modifier;
+        public int WisdomMod => _abilities.Wisdom.Modifier;
+        public int CharismaMod => _abilities.Charisma.Modifier;
 
         //Saving Throws
-        public int StrengthSavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Strength);
-        public int DexteritySavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Dexterity);
-        public int ConstitutionSavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Constitution);
-        public int IntelligenceSavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Intelligence);
-        public int WisdomSavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Wisdom);
-        public int CharismaSavingThrowValue => _character.CalculateSavingThrowValue(Ability.Type.Charisma);
+        public int StrengthSavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Strength, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
+        public int DexteritySavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Dexterity, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
+        public int ConstitutionSavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Constitution, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
+        public int IntelligenceSavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Intelligence, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
+        public int WisdomSavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Wisdom, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
+        public int CharismaSavingThrowValue => Character.CalculateSavingThrowValue(Ability.Type.Charisma, ProficientSavingThrows,
+            _abilities, ProficiencyBonus);
 
         //Skills
-        public int Acrobatics => _character.CalculateSkillValue(Skills.Acrobatics);
-        public int AnimalHandling => _character.CalculateSkillValue(Skills.AnimalHandling);
-        public int Arcana => _character.CalculateSkillValue(Skills.Arcana);
-        public int Athletics => _character.CalculateSkillValue(Skills.Athletics);
-        public int Deception => _character.CalculateSkillValue(Skills.Deception);
-        public int History => _character.CalculateSkillValue(Skills.History);
-        public int Insight => _character.CalculateSkillValue(Skills.Insight);
-        public int Intimidation => _character.CalculateSkillValue(Skills.Intimidation);
-        public int Investigation => _character.CalculateSkillValue(Skills.Investigation);
-        public int Medicine => _character.CalculateSkillValue(Skills.Medicine);
-        public int Nature => _character.CalculateSkillValue(Skills.Nature);
-        public int Perception => _character.CalculateSkillValue(Skills.Perception);
-        public int Performance => _character.CalculateSkillValue(Skills.Performance);
-        public int Persuasion => _character.CalculateSkillValue(Skills.Persuasion);
-        public int Religion => _character.CalculateSkillValue(Skills.Religion);
-        public int SleightOfHand => _character.CalculateSkillValue(Skills.SleightOfHand);
-        public int Stealth => _character.CalculateSkillValue(Skills.Stealth);
-        public int Survival => _character.CalculateSkillValue(Skills.Survival);
+        public int Acrobatics => Character.CalculateSkillValue(Skills.Acrobatics, ProficientSkills, _abilities, ProficiencyBonus);
+        public int AnimalHandling => Character.CalculateSkillValue(Skills.AnimalHandling, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Arcana => Character.CalculateSkillValue(Skills.Arcana, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Athletics => Character.CalculateSkillValue(Skills.Athletics, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Deception => Character.CalculateSkillValue(Skills.Deception, ProficientSkills, _abilities, ProficiencyBonus);
+        public int History => Character.CalculateSkillValue(Skills.History, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Insight => Character.CalculateSkillValue(Skills.Insight, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Intimidation => Character.CalculateSkillValue(Skills.Intimidation, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Investigation => Character.CalculateSkillValue(Skills.Investigation, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Medicine => Character.CalculateSkillValue(Skills.Medicine, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Nature => Character.CalculateSkillValue(Skills.Nature, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Perception => Character.CalculateSkillValue(Skills.Perception, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Performance => Character.CalculateSkillValue(Skills.Performance, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Persuasion => Character.CalculateSkillValue(Skills.Persuasion, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Religion => Character.CalculateSkillValue(Skills.Religion, ProficientSkills, _abilities, ProficiencyBonus);
+        public int SleightOfHand => Character.CalculateSkillValue(Skills.SleightOfHand, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Stealth => Character.CalculateSkillValue(Skills.Stealth, ProficientSkills, _abilities, ProficiencyBonus);
+        public int Survival => Character.CalculateSkillValue(Skills.Survival, ProficientSkills, _abilities, ProficiencyBonus);
         public int PassiveWisdom => 10 + Perception;
 
         #endregion
@@ -296,11 +336,18 @@ namespace DnDManager.ViewModels
         public CharacterModificationViewModel(UserStore userStore, Models.Character character, 
             DatabaseProvider databaseProvider, NavigationService<MainPlayerViewModel> MainPlayerViewModelNS)
         {
+            _abilities = new Abilities();
             _userStore = userStore;
             _character = character;
-            SubmitCharacterCommand = new SubmitCharacterCommand(this, MainPlayerViewModelNS, databaseProvider);
+            SubmitCharacterCommand = new SubmitCharacterCommand(_userStore, this, MainPlayerViewModelNS, databaseProvider, _character);
             CancelCommand = new NavigateCommand<MainPlayerViewModel>(MainPlayerViewModelNS);
+
+            if (character is not null) LoadFromCharacter(character);
         }
 
+        private void LoadFromCharacter(Character character)
+        {
+            
+        }
     }
 }

@@ -3,40 +3,62 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Xml.Linq;
 namespace DnDManager.Models
 {
+
     class Character
     {
-        private readonly int _id = -1000;
-
-        private int _level;
-        private int _speed;
-
-        public int Id => _id;
-        public string CharacterName { get; set; }
-        public string CharacterClass { get; set; }
-        public string Background { get; set; }
-        public string Race { get; set; }
-        public string EXP { get; set; }
-        public int ArmorClass { get; set; }
-        public int Inspiration { get; set; }
+        public const long DEFAULTID = -10000;
+        public long Id => _id;
+        public string CharacterName { get; private set; }
+        public string CharacterClass { get; private set; }
+        public string Background { get; private set; }
+        public string Race { get; private set; }
+        public int ArmorClass { get; private set; }
+        public int Inspiration { get; private set; }
         public int Speed
         {
             get { return _speed; }
-            set => _speed = Math.Max(0, value);
+            private set => _speed = Math.Max(0, value);
         }
 
-        public string HitDice { get; set; }
-        public string ProfAndLang { get; set; }
+        public string HitDice { get; private set; }
+        public string ProfAndLang { get; private set; }
 
-        public Alignment ChosenAlignment { get; set; }
+
+        public int EXP
+        {
+            get { return _exp; }
+            private set => _exp = Math.Max(0, value);
+        }
+
+        public int MaxHP
+        {
+            get { return _maxHP; }
+            private set => _maxHP = Math.Max(0, value);
+        }
+
+        public int CurrHP
+        {
+            get { return _currHP; }
+            private set => _currHP = Math.Clamp(value, 0, MaxHP);
+        }
+
+        public int TempHP
+        {
+            get { return _tempHP; }
+            private set => _tempHP = Math.Max(0, value);
+        }
+
+        public Alignment ChosenAlignment { get; private set; }
         public int Level
         {
             get => _level;
-            set => _level = Math.Clamp(value, 1, 20);
+            private set => _level = Math.Clamp(value, 1, 20);
         }
 
         private SavingThrows _proficientSavingThrows;
@@ -45,7 +67,7 @@ namespace DnDManager.Models
         public Skills ProficientSkills
         {
             get => _proficientSkills;
-            set
+            private set
             {
                 _proficientSkills = value;
             }
@@ -54,42 +76,32 @@ namespace DnDManager.Models
         public SavingThrows ProficientSavingThrows
         {
             get => _proficientSavingThrows;
-            set => _proficientSavingThrows = value;
+            private set => _proficientSavingThrows = value;
         }
 
-        public enum Alignment
+
+
+        private readonly long _id = DEFAULTID; //Default value
+        public Abilities abilities;
+        private int _maxHP;
+        private int _level;
+        private int _speed;
+        private int _currHP;
+        private int _tempHP;
+        private int _exp;
+
+        public static int CalculateProficiencyBonus(int level) => (int)Math.Ceiling(level / 4.0f) + 1;
+
+        public static int CalculateSavingThrowValue(Ability.Type type, SavingThrows proficientSavingThrows, Abilities abilities, int proficiencyBonus)
         {
-            LawfulGood,
-            NeutralGood,
-            ChaoticGood,
-            LawfulNeutral,
-            Neutral,
-            ChaoticNeutral,
-            LawfulEvil,
-            NeutralEvil,
-            ChaoticEvil
-        }
-
-        public Ability Strength;
-        public Ability Dexterity;
-        public Ability Constitution;
-        public Ability Intelligence;
-        public Ability Wisdom;
-        public Ability Charisma;
-
-        
-        public int ProficiencyBonus => (int)Math.Ceiling(Level / 4.0f) + 1;
-
-        public int CalculateSavingThrowValue(Ability.Type type)
-        {
-            Ability ab = GetAbilityPropertyFromType(type);
-            return _proficientSavingThrows.HasFlag((SavingThrows)ab.type)? ab.Modifier + ProficiencyBonus : ab.Modifier;
+            Ability ab = GetAbilityPropertyFromType(type, abilities);
+            return proficientSavingThrows.HasFlag((SavingThrows)ab.type)? ab.Modifier + proficiencyBonus : ab.Modifier;
         }  
 
-        public int CalculateSkillValue(Skills skill)
+        public static int CalculateSkillValue(Skills skill, Skills proficientSkills, Abilities abilities, int proficiencyBonus)
         {
-            var mod = GetAbilityPropertyFromType(GetAbilityTypeFromSkill(skill)).Modifier;
-            return _proficientSkills.HasFlag(skill) ? mod + ProficiencyBonus : mod;
+            var mod = GetAbilityPropertyFromType(GetAbilityTypeFromSkill(skill), abilities).Modifier;
+            return proficientSkills.HasFlag(skill) ? mod + proficiencyBonus : mod;
         }
 
         /// <summary>
@@ -97,7 +109,7 @@ namespace DnDManager.Models
         /// </summary>
         /// <param name="skill"></param>
         /// <returns>Returns related ability type</returns>
-        private Ability.Type GetAbilityTypeFromSkill(Skills skill)
+        public static Ability.Type GetAbilityTypeFromSkill(Skills skill)
         {
             return skill switch
             {
@@ -119,16 +131,16 @@ namespace DnDManager.Models
             };
         }
 
-        private Ability GetAbilityPropertyFromType(Ability.Type type)
+        public static Ability GetAbilityPropertyFromType(Ability.Type type, Abilities abilities)
         {
             return (type) switch
             {
-                Ability.Type.Strength => Strength,
-                Ability.Type.Dexterity => Dexterity,
-                Ability.Type.Constitution => Constitution,
-                Ability.Type.Intelligence => Intelligence,
-                Ability.Type.Wisdom => Wisdom,
-                Ability.Type.Charisma => Charisma,
+                Ability.Type.Strength => abilities.Strength,
+                Ability.Type.Dexterity => abilities.Dexterity,
+                Ability.Type.Constitution => abilities.Constitution,
+                Ability.Type.Intelligence => abilities.Intelligence,
+                Ability.Type.Wisdom => abilities.Wisdom,
+                Ability.Type.Charisma => abilities.Charisma,
                 _ => throw new NotImplementedException(),
             };
         }
@@ -143,26 +155,16 @@ namespace DnDManager.Models
 
         public Character()
         {
-            Strength = new Ability(Ability.Type.Strength);
-            Dexterity = new Ability(Ability.Type.Dexterity);
-            Constitution = new Ability(Ability.Type.Constitution);
-            Intelligence = new Ability(Ability.Type.Intelligence);
-            Wisdom = new Ability(Ability.Type.Wisdom);
-            Charisma = new Ability(Ability.Type.Charisma);
+            Abilities abilities = new();
             Level = 1;
         }
 
         public Character(int id, string characterName, string characterClass)
         {
+            Abilities abilities = new();
             _id = id;
             CharacterName = characterName;
             CharacterClass = characterClass;
-            Strength = new Ability(Ability.Type.Strength);
-            Dexterity = new Ability(Ability.Type.Dexterity);
-            Constitution = new Ability(Ability.Type.Constitution);
-            Intelligence = new Ability(Ability.Type.Intelligence);
-            Wisdom = new Ability(Ability.Type.Wisdom);
-            Charisma = new Ability(Ability.Type.Charisma);
             Level = 1;
         }
 
@@ -170,6 +172,5 @@ namespace DnDManager.Models
         {
             return $"Character name: {CharacterName}, Class: {CharacterClass}";
         }
-
     }
 }

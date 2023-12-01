@@ -5,6 +5,7 @@ using DnDManager.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,16 @@ namespace DnDManager.ViewModels
     {
         private readonly DatabaseProvider _databaseProvider;
         private readonly UserStore _userStore;
-
-        public ObservableCollection<SimplifiedCharacter> SimplifiedCharacterList { get; private set; }
+        private ObservableCollection<SimplifiedCharacter> _simplifiedCharacterList;
+        public ObservableCollection<SimplifiedCharacter> SimplifiedCharacterList
+        {
+            get => _simplifiedCharacterList;
+            set
+            {
+                _simplifiedCharacterList = value;
+                OnPropertyChanged(nameof(SimplifiedCharacterList));
+            }
+        }
 
         private SimplifiedCharacter? _selectedCharacter;
         public SimplifiedCharacter? SelectedCharacter 
@@ -29,7 +38,7 @@ namespace DnDManager.ViewModels
             }
         }
 
-        public void RemoveSelectedCharacter(int id)
+        public void RemoveSelectedCharacter(Int64 id)
         {
             if (_selectedCharacter is null) return;
             SimplifiedCharacterList.Remove(_selectedCharacter);
@@ -58,6 +67,7 @@ namespace DnDManager.ViewModels
             string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
             SimplifiedCharacterList = 
                  new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql, new {username = _userStore.CurrentUser.UserName}));
+            Debug.WriteLine(SimplifiedCharacterList[0].Name);
         }
     }
 }

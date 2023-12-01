@@ -66,7 +66,8 @@
             <TextBox x:Name="ExperienceTB"
                      Background ="#d9d9d9" 
                      Width="185" Height="33"
-                     MaxLength="16"
+                     MaxLength="10"
+                     InputScope="Number"
                      FontSize="18"
                      Text="{Binding EXP}" Canvas.Left="936" Canvas.Top="148" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="InspirationTB"
@@ -76,10 +77,10 @@
                      FontSize="30"
                      InputScope="Number"
                      Text="{Binding Inspiration}" Canvas.Left="195" Canvas.Top="259"/>
-            <TextBox x:Name="UserNameInput_Copy8"
+            <TextBox x:Name="FeaturesAndTraits"
                 Background ="#d9d9d9" 
                 Width="322" Height="726"
-                Text="{Binding UserName}" Canvas.Left="828" Canvas.Top="776"/>
+                Text="{Binding FeaturesTraits}" Canvas.Left="828" Canvas.Top="776"/>
             <!--Abilities -->
             <TextBox x:Name="StrengthAbilityModTB" 
                      Width="49" Height="49"
@@ -153,22 +154,22 @@
                      FontSize="16"
                      Text="{Binding Charisma, Mode=TwoWay}" Canvas.Left="91" Canvas.Top="1092"/>
             <!--Traits, Ideals, Bonds and Flaws-->
-            <TextBox x:Name="UserNameInput_Copy20"
+            <TextBox x:Name="PersonalityTraits"
                 Background ="#d9d9d9" 
                 Width="304" Height="85"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="287" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy21"
+                Text="{Binding PersonalityTraits}" Canvas.Left="840" Canvas.Top="287" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="Ideals"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="422" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy22"
+                Text="{Binding Ideals}" Canvas.Left="840" Canvas.Top="422" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="Bonds"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="531" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy23"
+                Text="{Binding Bonds}" Canvas.Left="840" Canvas.Top="531" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="Flaws"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="840" Canvas.Top="641" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                Text="{Binding Flaws}" Canvas.Left="840" Canvas.Top="641" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <!--///////////-->
             <TextBox x:Name="ProficiencyBonusTB"
                      Width="30" Height="30"
@@ -188,34 +189,51 @@
                      MaxLength="1024"
                      TextWrapping="Wrap"
                      Text="{Binding ProfAndLang}" Canvas.Left="66" Canvas.Top="1251"/>
-            <TextBox x:Name="UserNameInput_Copy27"
-                Background ="#d9d9d9" 
-                Width="238" Height="317"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="542" Canvas.Top="1192" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy28"
-                Background ="#d9d9d9" 
-                Width="46" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1199" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="UserNameInput_Copy29"
-                Background ="#d9d9d9" 
-                Width="46" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1251" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy30"
-                Background ="#d9d9d9" 
-                Width="46" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1303" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy31"
-                Background ="#d9d9d9" 
-                Width="46" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1356" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy32"
-                Background ="#d9d9d9" 
-                Width="46" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="466" Canvas.Top="1407" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy33"
-                Background ="#d9d9d9" 
-                Width="336" Height="219"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="444" Canvas.Top="916" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!-- Equipment -->
+            <TextBox x:Name="EquipmentBody"
+                     Background ="#d9d9d9" 
+                     Width="238" Height="317"
+                     Text="{Binding EquipmentBody}" Canvas.Left="542" Canvas.Top="1192" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="CP"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="32"
+                     Text="{Binding CP}" Canvas.Left="466" Canvas.Top="1199" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="SP"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="32"
+                     Text="{Binding SP}" Canvas.Left="466" Canvas.Top="1251" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="EP"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="32"
+                     Text="{Binding EP}" Canvas.Left="466" Canvas.Top="1303" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="GP"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="32"
+                     Text="{Binding GP}" Canvas.Left="466" Canvas.Top="1356" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="PP"
+                     Background ="#d9d9d9" 
+                     Width="46" Height="32"
+                     Text="{Binding PP}" Canvas.Left="466" Canvas.Top="1407" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            
+            <!--Attacks and Spellcasting-->
+            <TextBox x:Name="AtkSpl1"
+                     Background ="#d9d9d9" 
+                     Width="330" Height="32"
+                     Text="{Binding AtkSpl1}" Canvas.Left="446" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="AtkSpl2"
+                     Background ="#d9d9d9" 
+                     Width="330" Height="32"
+                     Text="{Binding AtkSpl2}" Canvas.Left="446" Canvas.Top="826" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="AtkSpl3"
+                     Background ="#d9d9d9" 
+                     Width="330" Height="32"
+                     Text="{Binding AtkSpl3}" Canvas.Left="446" Canvas.Top="869" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBox x:Name="AtkSplOverall"
+                     Background ="#d9d9d9" 
+                     Width="336" Height="219"
+                     Text="{Binding AtkSplOverall}" Canvas.Left="444" Canvas.Top="916" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <!--############-->
+
             <TextBox x:Name="ArmorClassTB"
                      Background ="#d9d9d9" 
                      Width="46" Height="46"
@@ -240,42 +258,6 @@
                 Width="96" Height="18"
                 MaxLength="5"
                 Text="{Binding HitDice}" Canvas.Left="494" Canvas.Top="638" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy39"
-                Background ="#d9d9d9" 
-                Width="128" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="783" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBox x:Name="UserNameInput_Copy40"
-                Background ="#d9d9d9" 
-                Width="128" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy41"
-                Background ="#d9d9d9" 
-                Width="128" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="446" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy42"
-                Background ="#d9d9d9" 
-                Width="61" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="UserNameInput_Copy43"
-                Background ="#d9d9d9" 
-                Width="61" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy44"
-                Background ="#d9d9d9" 
-                Width="61" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="585" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy45"
-                Background ="#d9d9d9" 
-                Width="125" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="UserNameInput_Copy46"
-                Background ="#d9d9d9" 
-                Width="125" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="826" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <TextBox x:Name="UserNameInput_Copy47"
-                Background ="#d9d9d9" 
-                Width="125" Height="32"
-                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="655" Canvas.Top="869" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
             <!--Saving Throws (ST)-->
             <CheckBox Content=""
@@ -529,25 +511,33 @@
                      HorizontalAlignment="Center" 
                      Text="{Binding Level, Mode=TwoWay}"
                      Canvas.Left="683" Canvas.Top="96" FontSize="20"/>
-            <TextBox x:Name="UserNameInput_Copy24"
-                     Background ="#d9d9d9" 
-                     Width="299" Height="62"
-                     Text="{Binding UserName}" Canvas.Left="466" Canvas.Top="423" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBox x:Name="UserNameInput_Copy72"
+            <TextBox x:Name="MaxHPTB"
                 Background ="#d9d9d9" 
                 Width="180" Height="22"
-                Text="{Binding UserName}" Canvas.Left="585" Canvas.Top="393" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                InputScope="Number"
+                MaxLength="6"
+                Text="{Binding MaxHP}" Canvas.Left="585" Canvas.Top="393" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBox x:Name="CurrentHPTB"
+                     Background ="#d9d9d9" 
+                     Width="299" Height="62"
+                     InputScope="Number"
+                     MaxLength="6"
+                     FontSize="40"
+                     Text="{Binding CurrHP}" Canvas.Left="466" Canvas.Top="423" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBox x:Name="TemporaryHPTB"
                 Background ="#d9d9d9" 
                 Width="299" Height="62"
-                Text="{Binding UserName}" Canvas.Left="466" Canvas.Top="528" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                InputScope="Number"
+                MaxLength="6"
+                FontSize="40"
+                Text="{Binding CurrHP}" Canvas.Left="466" Canvas.Top="528" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
             <Button Width="136" Height="28" 
                     Canvas.Left="924" Canvas.Top="1546" 
-                    Content="Submit"
+                    Content="Save"
                     FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"
                     Command="{Binding SubmitCharacterCommand}"/>
-                    
+
             <Button Width="136" Height="28" 
                     Canvas.Left="1078" Canvas.Top="1546" 
                     Content="Cancel"

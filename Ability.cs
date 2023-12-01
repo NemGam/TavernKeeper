@@ -23,6 +23,13 @@ namespace DnDManager
         public Ability(Type type)
         {
             this.type = type;
+            this.Value = 0;
+        }
+
+        public Ability(Type type, int value)
+        {
+            this.type = type;
+            this.Value = value;
         }
 
         const int MinLevel = 1;

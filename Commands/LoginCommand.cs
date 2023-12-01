@@ -52,11 +52,15 @@ namespace DnDManager.Commands
 
         private async void Login()
         {
-            if (true)
+            bool authenticated = true;
+            /*
+            DatabaseProvider.TryGetOneValue(await _databaseProvider.CallProcedureAsync<bool>("loginfunc replace IT",
+                    new { username = _loginViewModel.UserName!, pass = _loginViewModel.Password! }), out authenticated);
+            */
+            if (authenticated)
             {
-                //if type == Player: Go there, else go to Master
-                //Get stuff from DB
-                _userStore.CurrentUser = new User(_loginViewModel.UserName, "Test");
+                //Get first name from the users table
+                _userStore.CurrentUser = new User(_loginViewModel.UserName!, "Test");
                 _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
                 _mainPlayerViewNS.Navigate();
             }

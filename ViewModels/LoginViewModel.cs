@@ -7,7 +7,6 @@ namespace DnDManager.ViewModels
 {
     internal class LoginViewModel : ViewModelBase
     {
-        private readonly LoginProvider _loginProvider;
 
         private string? _userName;
         public string? UserName
@@ -36,7 +35,6 @@ namespace DnDManager.ViewModels
         public LoginViewModel(DatabaseProvider DBProvider, UserStore userStore, NavigationService<RegistrationViewModel> registrationViewModelNS, 
             NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
         {
-            _loginProvider = new LoginProvider(DBProvider);
             LoginCommand = new LoginCommand(this, userStore, DBProvider, mainPlayerViewModelNS);
             GoToRegistrationCommand = new NavigateCommand<RegistrationViewModel>(registrationViewModelNS);
         }
