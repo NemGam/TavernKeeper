@@ -2,11 +2,15 @@
 using DnDManager.Models;
 using DnDManager.Services;
 using DnDManager.Stores;
+using System.Windows;
 
 namespace DnDManager.ViewModels
 {
     internal class LoginViewModel : ViewModelBase
     {
+        public bool FailedAuthentication { get; private set; }
+
+        
 
         private string? _userName;
         public string? UserName
@@ -31,7 +35,6 @@ namespace DnDManager.ViewModels
         }
         public LoginCommand LoginCommand { get; }
         public NavigateCommand<RegistrationViewModel> GoToRegistrationCommand { get; }
-
         public LoginViewModel(DatabaseProvider DBProvider, UserStore userStore, NavigationService<RegistrationViewModel> registrationViewModelNS, 
             NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
         {
@@ -39,9 +42,9 @@ namespace DnDManager.ViewModels
             GoToRegistrationCommand = new NavigateCommand<RegistrationViewModel>(registrationViewModelNS);
         }
 
-        public override void Dispose()
+        public void SetFailedAuthentication()
         {
-            base.Dispose();
+            FailedAuthentication = true;
         }
 
 

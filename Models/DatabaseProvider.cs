@@ -42,40 +42,6 @@ namespace DnDManager.Models
             return;
         }
 
-        /// <summary>
-        /// Call procedure stored in the database.
-        /// </summary>
-        /// <typeparam name="T">Return type</typeparam>
-        /// <param name="name"></param>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public async Task CallProcedureAsync(string name, object? param = null)
-        {
-            using (var connection = await _dataSource.OpenConnectionAsync())
-            {
-                await connection.ExecuteAsync(name, param,
-                    commandType: CommandType.StoredProcedure);
-            }
-        }
-
-
-        /// <summary>
-        /// Call procedure stored in the database.
-        /// </summary>
-        /// <typeparam name="T">Return type</typeparam>
-        /// <param name="name"></param>
-        /// <param name="param"></param>
-        /// <returns></returns>
-        public async Task<List<T>>? CallProcedureAsync<T>(string name, object? param = null)
-        {
-            List<T>? result;
-            using (var connection = await _dataSource.OpenConnectionAsync())
-            {
-                result = (List<T>)await connection.QueryAsync<T>(name, param,
-                    commandType: CommandType.StoredProcedure);
-            }
-            return result;
-        }
 
         /// <summary>
         /// Send a request to manipulate data in the database.
@@ -100,13 +66,21 @@ namespace DnDManager.Models
         /// <param name="sql">(Parametrized) sql statement to execute.</param>
         /// <param name="param">Parameters to replace '@[YOUR PARAM NAME]' with.</param>
         /// <returns> <see cref="List{T}"/> of converted objects of type <typeparamref name="T"/>.</returns>
-        public async Task<List<T>> GetAsync<T>(string sql, object? param = null)
+        public async Task<List<T>?> GetAsync<T>(string sql, object? param = null)
         {
-            List<T> result;
+            List<T>? result;
             using (var connection = await _dataSource.OpenConnectionAsync())
             {
-                result = (List<T>)await connection.QueryAsync<T>(sql, param);
-                Debug.WriteLine(result.Count);
+                try
+                {
+                    var r = await connection.QueryAsync<T>(sql, param);
+                    result = r is null ? new List<T>() : (List<T>)r;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return null;
+                }
             }
             
             return result;

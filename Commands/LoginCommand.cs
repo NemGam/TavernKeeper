@@ -8,6 +8,9 @@ using DnDManager.Stores;
 using DnDManager.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace DnDManager.Commands
 {
@@ -18,6 +21,8 @@ namespace DnDManager.Commands
         private readonly UserStore _userStore;
         private readonly NavigationService<MainPlayerViewModel> _mainPlayerViewNS;
         private readonly DatabaseProvider _databaseProvider;
+        private bool isLoading = false;
+        
 
         public LoginCommand(LoginViewModel loginViewModel, UserStore userStore, DatabaseProvider databaseProvider,
             NavigationService<MainPlayerViewModel> mainPlayerViewNS)
@@ -38,25 +43,23 @@ namespace DnDManager.Commands
             }
         }
 
-        ~LoginCommand()
-        {
-            Debug.WriteLine("Disposed");
-            
-        }
-
         public override void Execute(object? parameter)
-        {
-            Debug.WriteLine($"{_loginViewModel.UserName}, {_loginViewModel.Password}");
-            Login();
+        {;
+            if (string.IsNullOrEmpty(((PasswordBox)parameter!).Password)){
+                return;
+            }
+            Login((PasswordBox) parameter);
         }
 
-        private async void Login()
+        private async void Login(PasswordBox box)
         {
             bool authenticated = true;
-            /*
-            DatabaseProvider.TryGetOneValue(await _databaseProvider.CallProcedureAsync<bool>("loginfunc replace IT",
-                    new { username = _loginViewModel.UserName!, pass = _loginViewModel.Password! }), out authenticated);
-            */
+            isLoading = true;
+            string sql = "SELECT check_password(@username, @pass)";
+            var s = await _databaseProvider!.GetAsync<bool>(sql,
+                    new { username = _loginViewModel!.UserName!, pass = box.Password });
+            if (s == null || s.Count == 0) authenticated = false;
+            else authenticated = s[0];
             if (authenticated)
             {
                 //Get first name from the users table
@@ -66,14 +69,16 @@ namespace DnDManager.Commands
             }
             else
             {
-
+                _loginViewModel.SetFailedAuthentication();
+                MessageBox.Show("Good try, Krish, I've added security, use tester as password");
+                isLoading = false;
             }
         }
 
         public override bool CanExecute(object? parameter)
         {
-            return !string.IsNullOrEmpty(_loginViewModel.UserName) 
-                && !string.IsNullOrEmpty(_loginViewModel.Password)
+            return !string.IsNullOrEmpty(_loginViewModel.UserName)
+                && !isLoading
                 && base.CanExecute(parameter);
         }
     }
