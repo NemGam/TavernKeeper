@@ -14,56 +14,71 @@
 	            ImageSource="{DynamicResource imgSource}" Opacity="0.9"></ImageBrush>
 
     </UserControl.Resources>
-
     <Grid>
+	    <Grid.ColumnDefinitions>
+		    <ColumnDefinition Width="*" />
+		    <ColumnDefinition Width="2*" />
+		    <ColumnDefinition Width="*" />
+	    </Grid.ColumnDefinitions>
 	    <Grid.RowDefinitions>
 		    <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
+		    <RowDefinition Height="2*" />
+		    <RowDefinition Height="*" />
 	    </Grid.RowDefinitions>
-        <!--Background="#6b6b6b"-->
-        <Label FontSize="40"
-               Grid.Row="0"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Bottom"
-               Foreground="White"
-               Content="{Binding WelcomeMessage}"></Label>
         <Border Padding="16"
-            Grid.Row="1"
-	        HorizontalAlignment="Center"
-	        VerticalAlignment="Top"
-	        Background="#f0eded"
-	        CornerRadius="8">
-            <Grid>
-                
-	            <Grid.ColumnDefinitions>
-		            <ColumnDefinition Width="*" />
-		            <ColumnDefinition Width="*" />
-	            </Grid.ColumnDefinitions>
-	            <Grid.RowDefinitions>
-		            <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-	            </Grid.RowDefinitions>
-                <Button Height="26"
+	            Grid.Row="1"
+	            Grid.Column="1"
+	            HorizontalAlignment="Stretch"
+	            VerticalAlignment="Stretch"
+	            CornerRadius="8">
+		    <Border.Background>
+			    <SolidColorBrush Opacity="0.7" Color="#247337"/>
+		    </Border.Background>
+		    <Grid>
+			    <Grid.RowDefinitions>
+				    <RowDefinition Height="*" />
+				    <RowDefinition Height="2*" />
+			    </Grid.RowDefinitions>
+			    <Label FontSize="40"
+			           Grid.Row="0"
+			           HorizontalAlignment="Center"
+			           VerticalAlignment="Center"
+			           Foreground="White"
+			           Content="{Binding WelcomeMessage}"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+					    <ColumnDefinition Width="*" />
+					    <ColumnDefinition Width="*" />
+				    </Grid.ColumnDefinitions>
+				    <Grid.RowDefinitions>
+					    <RowDefinition Height="*" />
+					    <RowDefinition Height="*" />
+				    </Grid.RowDefinitions>
+
+                    <Button FontSize="20"
+				            Margin="30,20,30,20"
+				            Content="Create Character"
+				            Command="{Binding CreateCharacterCommand}"/>
+                    <Button FontSize="20"
+                            Margin="30,20,30,20"
+                            Content="Browse Characters"
+                            Grid.Column="1"
+                            Command="{Binding BrowseCharacterCommand}"/>
+                    <Button FontSize="20"
+                            Margin="30,20,30,20"
+                            Content="Create Game"
+                            Grid.Row="1"
+                            Command="{Binding ContinueGameCommand}"/>
+                    <Button FontSize="20"
 	                    Margin="30,20,30,20"
-	                    Content="Create Character"
-	                    Command="{Binding CreateCharacterCommand}"/>
-                <Button Height="26"
-                        Margin="30,20,30,20"
-                        Content="Browse Characters"
-                        Grid.Column="1"
-                        Command="{Binding BrowseCharacterCommand}"/>
-                <Button Height="26"
-                        Margin="30,20,30,20"
-                        Content="Continue Game"
-                        Grid.Row="1"
-                        Command="{Binding ContinueGameCommand}"/>
-                <Button Height="26"
-                        Margin="30,20,30,20"
-                        Content="Browse Games"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Command="{Binding BrowseGameCommand}"/>
-            </Grid>
-        </Border>
+	                    Content="Browse Games"
+	                    Grid.Row="1"
+	                    Grid.Column="1"
+	                    Command="{Binding BrowseGameCommand}"/>
+                </Grid>
+		    </Grid>
+
+	    </Border>
     </Grid>
+    
 </UserControl>

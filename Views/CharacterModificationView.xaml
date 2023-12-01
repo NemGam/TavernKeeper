@@ -80,6 +80,8 @@
             <TextBox x:Name="FeaturesAndTraits"
                 Background ="#d9d9d9" 
                 Width="322" Height="726"
+                MaxLength="1024"
+                TextWrapping="Wrap"
                 Text="{Binding FeaturesTraits}" Canvas.Left="828" Canvas.Top="776"/>
             <!--Abilities -->
             <TextBox x:Name="StrengthAbilityModTB" 
@@ -157,18 +159,26 @@
             <TextBox x:Name="PersonalityTraits"
                 Background ="#d9d9d9" 
                 Width="304" Height="85"
+                MaxLength="1024"
+                TextWrapping="Wrap"
                 Text="{Binding PersonalityTraits}" Canvas.Left="840" Canvas.Top="287" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <TextBox x:Name="Ideals"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
+                MaxLength="1024"
+                TextWrapping="Wrap"
                 Text="{Binding Ideals}" Canvas.Left="840" Canvas.Top="422" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="Bonds"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
+                MaxLength="1024"
+                TextWrapping="Wrap"
                 Text="{Binding Bonds}" Canvas.Left="840" Canvas.Top="531" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="Flaws"
                 Background ="#d9d9d9" 
                 Width="304" Height="66"
+                MaxLength="1024"
+                TextWrapping="Wrap"
                 Text="{Binding Flaws}" Canvas.Left="840" Canvas.Top="641" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <!--///////////-->
             <TextBox x:Name="ProficiencyBonusTB"
@@ -193,44 +203,56 @@
             <TextBox x:Name="EquipmentBody"
                      Background ="#d9d9d9" 
                      Width="238" Height="317"
+                     MaxLength="1024"
+                     TextWrapping="Wrap"
                      Text="{Binding EquipmentBody}" Canvas.Left="542" Canvas.Top="1192" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="CP"
                      Background ="#d9d9d9" 
                      Width="46" Height="32"
+                     MaxLength="4"
                      Text="{Binding CP}" Canvas.Left="466" Canvas.Top="1199" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox x:Name="SP"
                      Background ="#d9d9d9" 
                      Width="46" Height="32"
+                     MaxLength="4"
                      Text="{Binding SP}" Canvas.Left="466" Canvas.Top="1251" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="EP"
                      Background ="#d9d9d9" 
                      Width="46" Height="32"
+                     MaxLength="4"
                      Text="{Binding EP}" Canvas.Left="466" Canvas.Top="1303" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="GP"
                      Background ="#d9d9d9" 
                      Width="46" Height="32"
+                     MaxLength="4"
                      Text="{Binding GP}" Canvas.Left="466" Canvas.Top="1356" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <TextBox x:Name="PP"
                      Background ="#d9d9d9" 
                      Width="46" Height="32"
+                     MaxLength="4"
                      Text="{Binding PP}" Canvas.Left="466" Canvas.Top="1407" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             
             <!--Attacks and Spellcasting-->
             <TextBox x:Name="AtkSpl1"
                      Background ="#d9d9d9" 
                      Width="330" Height="32"
+                     MaxLength="100"
                      Text="{Binding AtkSpl1}" Canvas.Left="446" Canvas.Top="783" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox x:Name="AtkSpl2"
                      Background ="#d9d9d9" 
                      Width="330" Height="32"
+                     MaxLength="100"
                      Text="{Binding AtkSpl2}" Canvas.Left="446" Canvas.Top="826" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox x:Name="AtkSpl3"
                      Background ="#d9d9d9" 
                      Width="330" Height="32"
+                     MaxLength="100"
                      Text="{Binding AtkSpl3}" Canvas.Left="446" Canvas.Top="869" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox x:Name="AtkSplOverall"
                      Background ="#d9d9d9" 
                      Width="336" Height="219"
+                     MaxLength="1024"
+                     TextWrapping="Wrap"
                      Text="{Binding AtkSplOverall}" Canvas.Left="444" Canvas.Top="916" HorizontalAlignment="Center" VerticalAlignment="Top"/>
             <!--############-->
 
@@ -530,7 +552,7 @@
                 InputScope="Number"
                 MaxLength="6"
                 FontSize="40"
-                Text="{Binding CurrHP}" Canvas.Left="466" Canvas.Top="528" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                Text="{Binding TempHP}" Canvas.Left="466" Canvas.Top="528" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
             <Button Width="136" Height="28" 
                     Canvas.Left="924" Canvas.Top="1546" 

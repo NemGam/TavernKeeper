@@ -90,7 +90,7 @@ namespace DnDManager.Models
         private readonly long _id = DEFAULTID; //Default value
         public Abilities abilities;
         private int _maxHP;
-        private int _level;
+        private int _level = 1;
         private int _speed;
         private int _currHP;
         private int _tempHP;

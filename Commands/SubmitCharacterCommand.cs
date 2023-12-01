@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DnDManager.Commands
 {
@@ -30,8 +32,30 @@ namespace DnDManager.Commands
             _character = character;
         }
 
+        bool IsAnyNullOrEmpty(object myObject)
+        {
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
+            {
+                if (pi.PropertyType == typeof(string))
+                {
+                    string value = (string)pi.GetValue(myObject);
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
         public override void Execute(object? parameter)
         {
+            if (IsAnyNullOrEmpty(_characterModificationViewModel))
+            {
+                MessageBox.Show("Please, fill all the fields!");
+                return;
+            }
             Task.Run(async () =>
             {
                 try

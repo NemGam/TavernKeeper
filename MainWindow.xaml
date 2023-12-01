@@ -8,9 +8,9 @@
         xmlns:vms="clr-namespace:DnDManager.ViewModels"
         xmlns:math="http://hexinnovation.com/math"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        MinWidth="800"
-        MinHeight="450"
+        Title="MainWindow" Height="840" Width="1500"
+        MinWidth="1500"
+        MinHeight="840"
         ResizeMode="CanResize" Icon="/Resources/Icons/DnDManagerIcon.png">
     <Window.Resources>
         <math:MathConverter x:Key="Math"/>
