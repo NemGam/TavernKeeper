@@ -37,10 +37,15 @@ namespace DnDManager
             }
             else
             {
+                /*
                 _userStore.CurrentUser = new User("Vlad", "Test");
                 _navigationStore.CurrentViewModel = new GamesBrowserViewModel(_userStore, _dbProvider,
                     new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
-            
+                */
+                _userStore.CurrentUser = new User("Vlad", "Vladdd");
+                _navigationStore.CurrentViewModel = new FindGameViewModel(_userStore, _dbProvider,
+                    new NavigationService<GamesBrowserViewModel>(_navigationStore, CreateGameBrowserViewModel));
+
                 //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
             }
 
@@ -50,6 +55,19 @@ namespace DnDManager
             };
             MainWindow.Show();
             base.OnStartup(e);
+        }
+
+        private GamesBrowserViewModel CreateGameBrowserViewModel()
+        {
+            return new GamesBrowserViewModel(_userStore, _dbProvider,
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
+                new NavigationService<FindGameViewModel>(_navigationStore, CreateFindGameViewModel));
+        }
+
+        private FindGameViewModel CreateFindGameViewModel()
+        {
+            return new FindGameViewModel(_userStore, _dbProvider,
+                new NavigationService<GamesBrowserViewModel>(_navigationStore, CreateGameBrowserViewModel));
         }
 
         private LoginViewModel CreateLoginViewModel()
@@ -64,7 +82,15 @@ namespace DnDManager
             return new MainPlayerViewModel(_userStore, 
                 new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, 
                 (character) => CreateCharacterModificationViewModel(character)),
-                new NavigationService<CharacterBrowserViewModel>(_navigationStore, CreateCharacterBrowserViewModel));
+                new NavigationService<CharacterBrowserViewModel>(_navigationStore, CreateCharacterBrowserViewModel),
+                new NavigationService<CreateGameViewModel>(_navigationStore, CreateCreateGameViewModel),
+                new NavigationService<GamesBrowserViewModel>(_navigationStore, CreateGameBrowserViewModel));
+        }
+
+        private CreateGameViewModel CreateCreateGameViewModel()
+        {
+            return new CreateGameViewModel(_dbProvider, _userStore,
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
         }
 
         private CharacterModificationViewModel CreateCharacterModificationViewModel(Character character)
@@ -76,8 +102,7 @@ namespace DnDManager
         private CharacterBrowserViewModel CreateCharacterBrowserViewModel()
         {
             return new CharacterBrowserViewModel(_userStore, _dbProvider,
-                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
-                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore, CreateCharacterModificationViewModel));
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
         }
 
         private RegistrationViewModel CreateRegistrationViewModel()

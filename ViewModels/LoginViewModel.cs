@@ -42,17 +42,6 @@ namespace DnDManager.ViewModels
                 OnPropertyChanged(nameof(UserName));
             }
         }
-
-        private string? _password;
-        public string? Password
-        {
-            get => _password;
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
         public LoginCommand LoginCommand { get; }
         public NavigateCommand<RegistrationViewModel> GoToRegistrationCommand { get; }
         public LoginViewModel(DatabaseProvider DBProvider, UserStore userStore, NavigationService<RegistrationViewModel> registrationViewModelNS, 

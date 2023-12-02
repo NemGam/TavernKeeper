@@ -38,8 +38,7 @@ namespace DnDManager.Commands
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(LoginViewModel.UserName) 
-                || e.PropertyName == nameof(LoginViewModel.Password)
+            if (e.PropertyName == nameof(LoginViewModel.UserName)
                 || e.PropertyName == nameof(LoginViewModel.IsBusy))
             {
                 OnCanExecuteChanged(null);

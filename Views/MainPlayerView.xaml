@@ -68,7 +68,7 @@
                             Margin="30,20,30,20"
                             Content="Create Game"
                             Grid.Row="1"
-                            Command="{Binding ContinueGameCommand}"/>
+                            Command="{Binding CreateGameCommand}"/>
                     <Button FontSize="20"
 	                    Margin="30,20,30,20"
 	                    Content="Browse Games"

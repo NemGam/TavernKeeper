@@ -25,18 +25,21 @@ namespace DnDManager.ViewModels
 
 		public ParameterNavigateCommand<Character, CharacterModificationViewModel> CreateCharacterCommand { get; }
 		public NavigateCommand<CharacterBrowserViewModel> BrowseCharacterCommand { get; }
-        public NavigateCommand<ViewModelBase> ContinueGameCommand { get; }
-        public NavigateCommand<ViewModelBase> BrowseGameCommand { get; }
+        public NavigateCommand<CreateGameViewModel> CreateGameCommand { get; }
+        public NavigateCommand<GamesBrowserViewModel> BrowseGameCommand { get; }
 
         public MainPlayerViewModel(UserStore userStore, 
 			ParameterNavigationService<Character, CharacterModificationViewModel> characterModificationNS,
-			NavigationService<CharacterBrowserViewModel> characterBrowserNS
-			)
+			NavigationService<CharacterBrowserViewModel> characterBrowserNS,
+			NavigationService<CreateGameViewModel> createGameNS,
+            NavigationService<GamesBrowserViewModel> gameBrowserNS)
         {
 			_userStore = userStore;
 			CreateCharacterCommand = new ParameterNavigateCommand<Character, CharacterModificationViewModel>
 				(characterModificationNS, null);
             BrowseCharacterCommand = new NavigateCommand<CharacterBrowserViewModel>(characterBrowserNS);
+			BrowseGameCommand = new NavigateCommand<GamesBrowserViewModel>(gameBrowserNS);
+			CreateGameCommand = new NavigateCommand<CreateGameViewModel>(createGameNS);
         }
 
 

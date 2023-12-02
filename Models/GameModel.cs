@@ -8,6 +8,7 @@ namespace DnDManager.Models
 {
     internal class GameModel
     {
+        public string character_name { get; set; }
         public long campaign_id {  get; set; }
         public string created_by {  get; set; }
         public string created_at { get; set; }

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DnDManager.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="1000">
     <Grid>
         <Grid.Resources>
             <Style TargetType="ListViewItem">
@@ -45,10 +45,10 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <ListView Name="CharactersList"
-                      ItemsSource="{Binding SimplifiedCharacterList}"
+                      ItemsSource="{Binding GamesList}"
                       SelectionMode="Single"
                       IsSynchronizedWithCurrentItem="True"
-                      SelectedItem="{Binding SelectedCharacter}"
+                      SelectedItem="{Binding SelectedGame}"
                       AlternationCount="2"
                       FontSize="20"
                       Margin="0 0 0 15">
@@ -63,7 +63,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Character" Width="220" DisplayMemberBinding="{Binding Level}" />
+                            <GridViewColumn Header="Character" Width="220" DisplayMemberBinding="{Binding character_name}" />
                             <GridViewColumn Header="Master" Width="220" DisplayMemberBinding="{Binding created_by}" />
                             <GridViewColumn Header="Created" Width="220" DisplayMemberBinding="{Binding created_at}"/>
                         </GridView>
@@ -77,7 +77,7 @@
                         Content="Find"
                         FontSize="25"
                         Margin="10, 0, 10, 0"
-                        Command="{Binding FindGameCommand}"/>
+                        Command="{Binding GoToFindGameCommand}"/>
 	                <Button Height="40" Width="150"
 	                        Content="Enter"
 	                        FontSize="25"

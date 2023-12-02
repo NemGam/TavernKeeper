@@ -53,10 +53,8 @@ namespace DnDManager.ViewModels
 
         public NavigateCommand<MainPlayerViewModel> GoBackCommand { get; }
         public EditCharacterCommand EditCharacterCommand { get; }
-        public DeleteCharacterCommand DeleteCharacterCommand { get; }
         public CharacterBrowserViewModel(UserStore userStore, DatabaseProvider databaseProvider, 
-            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS,
-            ParameterNavigationService<Character, CharacterModificationViewModel> characterModPNS)
+            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS)
         {
             _userStore = userStore;
             _databaseProvider = databaseProvider;
@@ -68,8 +66,6 @@ namespace DnDManager.ViewModels
                      new { username = _userStore.CurrentUser.UserName }));
             });
             GoBackCommand = new NavigateCommand<MainPlayerViewModel>(mainPlayerViewModelNS);
-            EditCharacterCommand = new EditCharacterCommand(this, databaseProvider, characterModPNS);
-            DeleteCharacterCommand = new DeleteCharacterCommand(this, databaseProvider);
         }
     }
 }

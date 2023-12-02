@@ -16,18 +16,18 @@ namespace DnDManager.ViewModels
     {
         private readonly DatabaseProvider _databaseProvider;
         private readonly UserStore _userStore;
-        private ObservableCollection<GameModel> _simplifiedCharacterList;
-        public ObservableCollection<GameModel> SimplifiedCharacterList
+        private ObservableCollection<GameModel> _gamesList;
+        public ObservableCollection<GameModel> GamesList
         {
-            get => _simplifiedCharacterList;
+            get => _gamesList;
             set
             {
-                _simplifiedCharacterList = value;
-                OnPropertyChanged(nameof(SimplifiedCharacterList));
+                _gamesList = value;
+                OnPropertyChanged(nameof(GamesList));
             }
         }
-        private SimplifiedCharacter? _selectedGame;
-        public SimplifiedCharacter? SelectedGame
+        private GameModel? _selectedGame;
+        public GameModel? SelectedGame
         {
             get => _selectedGame;
             set
@@ -38,21 +38,43 @@ namespace DnDManager.ViewModels
         }
 
         public NavigateCommand<MainPlayerViewModel> GoBackCommand { get; }
+        public DeleteGameCommand DeleteGameCommand { get; }
+        public NavigateCommand<FindGameViewModel> GoToFindGameCommand { get; }
 
         public GamesBrowserViewModel(UserStore userStore, DatabaseProvider databaseProvider,
-            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS) 
+            NavigationService<MainPlayerViewModel> mainPlayerViewModelNS,
+            NavigationService<FindGameViewModel> findGameViewModelNS) 
         {
             _userStore = userStore;
             _databaseProvider = databaseProvider;
             Task.Run(async () =>
             {
-                string sql = "SELECT DISTINCT c.campaign_name FROM campaigns c JOIN campaign_characters cc ON c.campaign_id = cc.campaign_id JOIN users u ON cc.character_id = @username WHERE cc.character_id = @username OR c.created_by = @username;";
-                SimplifiedCharacterList =
-                     new ObservableCollection<GameModel>(await _databaseProvider.GetAsync<GameModel>(sql,
+                Debug.WriteLine(_userStore.CurrentUser.UserName);
+                string sql = "SELECT DISTINCT c.campaign_id, c.campaign_name, c.created_by, c.created_at, ch.character_name FROM campaigns c LEFT JOIN campaign_characters cc ON c.campaign_id = cc.campaign_id LEFT JOIN users u ON c.created_by = u.username LEFT JOIN characters ch ON cc.character_id = ch.id WHERE u.username = @username OR ch.owner_username = @username;";
+                _gamesList = new ObservableCollection<GameModel>(await _databaseProvider.GetAsync<GameModel>(sql,
                      new { username = _userStore.CurrentUser.UserName}));
-                Debug.WriteLine(SimplifiedCharacterList[0].created_by);
+                OnPropertyChanged(nameof(GamesList));
+                Debug.WriteLine(_gamesList.Count);
             });
             GoBackCommand = new NavigateCommand<MainPlayerViewModel>(mainPlayerViewModelNS);
+            DeleteGameCommand = new DeleteGameCommand(this, _databaseProvider, _userStore);
+            GoToFindGameCommand = new NavigateCommand<FindGameViewModel>(findGameViewModelNS);
+        }
+
+        internal void RemoveSelectedGame()
+        {
+            if (_selectedGame is null) return;
+            if (SelectedGame.created_by != _userStore.CurrentUser.UserName) return;
+            try
+            {
+                _gamesList.Remove(_selectedGame);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+            SelectedGame = null;
         }
     }
 }
