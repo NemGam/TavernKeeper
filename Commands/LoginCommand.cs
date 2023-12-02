@@ -16,7 +16,9 @@ using DnDManager.Helpers;
 
 namespace DnDManager.Commands
 {
-
+    /// <summary>
+    /// Command to login into the app
+    /// </summary>
     internal class LoginCommand : CommandBase
     {
         private readonly LoginViewModel _loginViewModel;
@@ -57,7 +59,7 @@ namespace DnDManager.Commands
         {
             _loginViewModel.IsBusy = true;
             bool authenticated = true;
-            byte[] salt;
+            //Get the password salt of the user from the DB
             string sql = "SELECT pass_salt FROM users WHERE username = @username";
             var s = await _databaseProvider!.GetAsync<string>(sql,
                     new { username = _loginViewModel!.UserName!});
@@ -66,16 +68,18 @@ namespace DnDManager.Commands
                 _loginViewModel.IsBusy = false;
                 return;
             }
-            salt = Convert.FromHexString(s[0]);
+            byte[] salt = Convert.FromHexString(s[0]);
             string hashedPass = AuthenticationHelper.HashString(box.Password, salt);
+
+            //Check if the given password and username are correct.
             sql = "SELECT check_password(@username, @pass)";
             var s1 = await _databaseProvider!.GetAsync<bool>(sql,
                     new { username = _loginViewModel!.UserName!, pass = hashedPass });
             if (s1 == null || s1.Count == 0) authenticated = false;
             else authenticated = s1[0];
+
             if (authenticated)
             {
-                
                 _loginViewModel.PropertyChanged -= OnViewModelPropertyChanged;
                 sql = "SELECT first_name FROM users WHERE username = @username";
                 var s2 = await _databaseProvider!.GetAsync<string>(sql,

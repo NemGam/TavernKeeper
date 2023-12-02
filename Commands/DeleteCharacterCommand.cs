@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DnDManager.Commands
 {
+    /// <summary>
+    /// Command to delete character from the character list and DB
+    /// </summary>
     class DeleteCharacterCommand : CommandBase
     {
         private readonly CharacterBrowserViewModel _characterBrowserVM;
@@ -17,6 +20,11 @@ namespace DnDManager.Commands
             _databaseProvider = databaseProvider;
             _characterBrowserVM = characterBrowserVM;
             characterBrowserVM.PropertyChanged += OnViewModelPropertyChanged;
+        }
+
+        ~DeleteCharacterCommand() 
+        {
+            _characterBrowserVM.PropertyChanged -= OnViewModelPropertyChanged;
         }
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -30,6 +38,7 @@ namespace DnDManager.Commands
         {
             try
             {
+                //Try to delete the character with the given ID from the database.
                 Task.Run(async () =>
                 {
                     string sql = "DELETE FROM characters WHERE id = @id;";

@@ -1,5 +1,6 @@
 ﻿using DnDManager.Helpers;
 using DnDManager.Models;
+using DnDManager.Services;
 using DnDManager.Stores;
 using DnDManager.ViewModels;
 using System;
@@ -18,9 +19,14 @@ namespace DnDManager.Commands
         private readonly FindGameViewModel _findGameViewModel;
         private readonly DatabaseProvider _databaseProvider;
         private readonly UserStore _userStore;
+        private readonly NavigationService<GamesBrowserViewModel> mpns;
 
-        public FindGameCommand(FindGameViewModel findGameViewModel, DatabaseProvider databaseProvider, UserStore userStore)
+        public FindGameCommand(FindGameViewModel findGameViewModel, 
+            DatabaseProvider databaseProvider, 
+            UserStore userStore,
+           NavigationService<GamesBrowserViewModel> mpnss)
         {
+            mpns = mpnss;
             this._findGameViewModel = findGameViewModel;
             this._databaseProvider = databaseProvider;
             this._userStore = userStore;
@@ -43,11 +49,12 @@ namespace DnDManager.Commands
             {
                 return;
             }
-            Login((PasswordBox)parameter);
+            RegisterInGame((PasswordBox)parameter);
         }
 
-        private async void Login(PasswordBox box)
+        private async void RegisterInGame(PasswordBox box)
         {
+            //Get salt for the current user from the database
             _findGameViewModel.IsBusy = true;
             bool authenticated = true;
             byte[] salt;
@@ -61,6 +68,8 @@ namespace DnDManager.Commands
                 return;
             }
             salt = Convert.FromHexString(s[0]);
+
+            //Check if the password is correct for the given campaign
             string hashedPass = AuthenticationHelper.HashString(box.Password, salt);
             sql = "SELECT check_campaign(@id, @pass)";
             var s1 = await _databaseProvider!.GetAsync<bool>(sql,
@@ -68,19 +77,20 @@ namespace DnDManager.Commands
             if (s1 == null || s1.Count == 0) authenticated = false;
             else authenticated = s1[0];
             
-
+            //If authenticated add user's character into the campaign's pool
+            //Else set error message
             if (authenticated)
             {
-                /*
-                _findGameViewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
-                sql = "SELECT first_name FROM users WHERE username = @username";
-                var s2 = await _databaseProvider!.GetAsync<string>(sql,
-                    new { username = _loginViewModel.UserName! });
-                string fname = s2[0];
-                _userStore.CurrentUser = new User(_loginViewModel.UserName!, fname);
-                _mainPlayerViewNS.Navigate();
-                */
+                _findGameViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+                sql = "INSERT INTO campaign_characters (campaign_id, character_id, campaign_role) VALUES (@cid, @ccid, @nyi);";
+                await _databaseProvider!.PostAsync(sql, new
+                {
+                    cid = _findGameViewModel.CampaignID,
+                    ccid = _findGameViewModel.SelectedCharacter.ID,
+                    nyi = "NYI"
+                });
+                mpns.Navigate();
             }
             else
             {

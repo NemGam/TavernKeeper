@@ -102,7 +102,9 @@ namespace DnDManager
         private CharacterBrowserViewModel CreateCharacterBrowserViewModel()
         {
             return new CharacterBrowserViewModel(_userStore, _dbProvider,
-                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
+                new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel),
+                new ParameterNavigationService<Character, CharacterModificationViewModel>(_navigationStore,
+                (character) => CreateCharacterModificationViewModel(character)));
         }
 
         private RegistrationViewModel CreateRegistrationViewModel()

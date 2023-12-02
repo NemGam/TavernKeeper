@@ -73,6 +73,7 @@
 			            </GridView>
 		            </ListView.View>
 	            </ListView>
+                <!--Bottom panel -->
                 <StackPanel 
 							Orientation="Horizontal"
                             HorizontalAlignment="Right"

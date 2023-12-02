@@ -6,6 +6,9 @@ using System.Windows;
 
 namespace DnDManager.ViewModels
 {
+    /// <summary>
+    /// Login screen logic
+    /// </summary>
     internal class LoginViewModel : ViewModelBase
     {
         private bool _failedAuthentication = false;
@@ -30,8 +33,6 @@ namespace DnDManager.ViewModels
 
         }
 
-        
-
         private string? _userName;
         public string? UserName
         {
@@ -51,6 +52,9 @@ namespace DnDManager.ViewModels
             GoToRegistrationCommand = new NavigateCommand<RegistrationViewModel>(registrationViewModelNS);
         }
 
+        /// <summary>
+        /// Show login error message
+        /// </summary>
         public void SetFailedAuthentication()
         {
             IsBusy = false;

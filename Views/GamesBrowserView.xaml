@@ -63,6 +63,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
+                            <GridViewColumn Header="ID" Width="220" DisplayMemberBinding="{Binding campaign_id}" />
                             <GridViewColumn Header="Character" Width="220" DisplayMemberBinding="{Binding character_name}" />
                             <GridViewColumn Header="Master" Width="220" DisplayMemberBinding="{Binding created_by}" />
                             <GridViewColumn Header="Created" Width="220" DisplayMemberBinding="{Binding created_at}"/>
@@ -78,11 +79,14 @@
                         FontSize="25"
                         Margin="10, 0, 10, 0"
                         Command="{Binding GoToFindGameCommand}"/>
+                    <!--
 	                <Button Height="40" Width="150"
 	                        Content="Enter"
 	                        FontSize="25"
 	                        Margin="10, 0, 10, 0"
+                            Visibility="Collapsed"
 	                        Command="{Binding EnterGameCommand}"/>
+                    -->
 
                     <Button Height="40" Width="150"
                         Content="Delete"

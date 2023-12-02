@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace DnDManager.Services
 {
     /// <summary>
-    /// Class that creates new ViewModel and navigates into it.
+    /// Class that creates the new ViewModel and navigates into it.
     /// </summary>
-    /// <typeparam name="TViewModel"></typeparam>
+    /// <typeparam name="TViewModel">Any ViewModel</typeparam>
     internal class NavigationService<TViewModel>
         where TViewModel : ViewModelBase
     {
@@ -23,6 +23,9 @@ namespace DnDManager.Services
             this._createViewModel = createViewModel;
         }
 
+        /// <summary>
+        /// Navigate into the stored ViewModel.
+        /// </summary>
         public void Navigate()
         {
             _navigationStore.CurrentViewModel = _createViewModel();

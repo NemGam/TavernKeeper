@@ -17,6 +17,7 @@ namespace DnDManager.ViewModels
         private readonly DatabaseProvider _databaseProvider;
         private readonly UserStore _userStore;
         private ObservableCollection<SimplifiedCharacter> _charactersList;
+        private bool _isBusy;
 
         private bool _failedGameFind;
         public bool FailedGameFind
@@ -32,7 +33,6 @@ namespace DnDManager.ViewModels
 
         public int CampaignID { get; set; }
 
-        private bool _isBusy;
         public bool IsBusy
         {
             get => _isBusy;
@@ -54,6 +54,9 @@ namespace DnDManager.ViewModels
         }
         private SimplifiedCharacter? _selectedCharacter;
 
+        /// <summary>
+        /// Currently selected character on the Character List
+        /// </summary>
         public SimplifiedCharacter? SelectedCharacter
         {
             get => _selectedCharacter;
@@ -72,18 +75,26 @@ namespace DnDManager.ViewModels
         {
             _userStore = userStore;
             _databaseProvider = databaseProvider;
-            Task.Run(async () =>
-            {
-                string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
-                CharactersList =
-                     new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql,
-                     new { username = _userStore.CurrentUser.UserName }));
-                Debug.WriteLine(CharactersList[0].ID);
-            });
+            FillCharacterListAsync();
             GoBackCommand = new NavigateCommand<GamesBrowserViewModel>(gameBrowserViewModelNS);
-            FindGameCommand = new FindGameCommand(this, _databaseProvider, _userStore);
+            FindGameCommand = new FindGameCommand(this, _databaseProvider, _userStore, gameBrowserViewModelNS);
         }
 
+        /// <summary>
+        /// Fill the characters list from the DB
+        /// </summary>
+        /// <returns></returns>
+        private async Task FillCharacterListAsync()
+        {
+            string sql = "SELECT * FROM simplified_characters_view WHERE owner_username = @username";
+            CharactersList =
+                 new ObservableCollection<SimplifiedCharacter>(await _databaseProvider.GetAsync<SimplifiedCharacter>(sql,
+                 new { username = _userStore.CurrentUser.UserName }));
+        }
+
+        /// <summary>
+        /// Sets FailedGameFind to true to show the error message
+        /// </summary>
         internal void SetFailedGameFind()
         {
             FailedGameFind = true;

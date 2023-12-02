@@ -8,7 +8,7 @@
         xmlns:vms="clr-namespace:DnDManager.ViewModels"
         xmlns:math="http://hexinnovation.com/math"
         mc:Ignorable="d"
-        Title="MainWindow" Height="840" Width="1500"
+        Title="DnDossier" Height="840" Width="1500"
         MinWidth="1500"
         MinHeight="840"
         ResizeMode="CanResize" Icon="/Resources/Icons/DnDManagerIcon.png">
