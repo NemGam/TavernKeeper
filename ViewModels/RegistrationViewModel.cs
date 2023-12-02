@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace DnDManager.ViewModels
 {
+	/// <summary>
+	/// ViewModel for registration form.
+	/// </summary>
     class RegistrationViewModel : ViewModelBase
     {
 		private bool _failedRegistration = false;
@@ -100,7 +103,9 @@ namespace DnDManager.ViewModels
 			RegisterCommand = new RegisterCommand(this, databaseProvider, loginViewNavigationService);
 			GoToLoginCommand = new NavigateCommand<LoginViewModel>(loginViewNavigationService);
         }
-
+		/// <summary>
+		/// Show error message
+		/// </summary>
         public void SetFailedRegistration()
         {
             FailedRegistration = true;

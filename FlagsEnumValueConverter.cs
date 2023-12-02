@@ -4,6 +4,9 @@ using System.Globalization;
 
 namespace DnDManager
 {
+    /// <summary>
+    /// XAML Converter for Flags Enums
+    /// </summary>
     public class FlagsEnumValueConverter : IValueConverter
     {
         private int targetValue;

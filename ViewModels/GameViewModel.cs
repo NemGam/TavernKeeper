@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace DnDManager.ViewModels
 {
+    /// <summary>
+    /// Not Implemented
+    /// </summary>
+    [Obsolete]
     internal class GameViewModel : ViewModelBase
     {
         public GameViewModel()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

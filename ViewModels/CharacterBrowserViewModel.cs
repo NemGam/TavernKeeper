@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DnDManager.ViewModels
 {
+    /// <summary>
+    /// ViewModel for character browser
+    /// </summary>
     internal class CharacterBrowserViewModel : ViewModelBase
     {
         private readonly DatabaseProvider _databaseProvider;

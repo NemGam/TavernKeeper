@@ -5,6 +5,9 @@ using DnDManager.Stores;
 
 namespace DnDManager.ViewModels
 {
+	/// <summary>
+	/// ViewModel for Main Menu
+	/// </summary>
     internal class MainPlayerViewModel : ViewModelBase
     {
 		private UserStore _userStore;
@@ -12,15 +15,9 @@ namespace DnDManager.ViewModels
 		//Welcome message for the Main Player Screen
 		public string WelcomeMessage
 		{
-			get
-			{
-				return _userStore.CurrentUser is not null? 
+			get	=> _userStore.CurrentUser is not null? 
 					$"Hello, {_userStore.CurrentUser.FirstName}!" : "ERROR: CURRENT USER IS NULL";
-			}
-			set
-			{ 
-				OnPropertyChanged(nameof(WelcomeMessage));
-			}
+			set => OnPropertyChanged(nameof(WelcomeMessage));
 		}
 
 		public ParameterNavigateCommand<Character, CharacterModificationViewModel> CreateCharacterCommand { get; }

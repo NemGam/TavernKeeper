@@ -62,6 +62,9 @@ namespace DnDManager.ViewModels
             GoToFindGameCommand = new NavigateCommand<FindGameViewModel>(findGameViewModelNS);
         }
 
+        /// <summary>
+        /// Remove selected game from the local list (not DB)
+        /// </summary>
         internal void RemoveSelectedGame()
         {
             if (_selectedGame is null) return;

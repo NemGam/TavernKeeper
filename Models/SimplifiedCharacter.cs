@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DnDManager.Models
 {
     /// <summary>
-    /// Class for simplified view of all characters
+    /// This is a simplified version of character object
     /// </summary>
     internal class SimplifiedCharacter : IDbReturnable
     {

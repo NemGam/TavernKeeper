@@ -29,25 +29,7 @@ namespace DnDManager
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            //TEMP
-            const bool def = true;
-            if (def)
-            {
-                _navigationStore.CurrentViewModel = CreateLoginViewModel();
-            }
-            else
-            {
-                /*
-                _userStore.CurrentUser = new User("Vlad", "Test");
-                _navigationStore.CurrentViewModel = new GamesBrowserViewModel(_userStore, _dbProvider,
-                    new NavigationService<MainPlayerViewModel>(_navigationStore, CreateMainPlayerViewModel));
-                */
-                _userStore.CurrentUser = new User("Vlad", "Vladdd");
-                _navigationStore.CurrentViewModel = new FindGameViewModel(_userStore, _dbProvider,
-                    new NavigationService<GamesBrowserViewModel>(_navigationStore, CreateGameBrowserViewModel));
-
-                //_navigationStore.CurrentViewModel = new CharacterModificationViewModel(new Models.Character("Vlad"), new Models.DatabaseProvider());
-            }
+            _navigationStore.CurrentViewModel = CreateLoginViewModel();
 
             MainWindow = new MainWindow()
             {

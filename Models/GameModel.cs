@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DnDManager.Models
 {
+    /// <summary>
+    /// Campaign object that matches DB columns
+    /// </summary>
     internal class GameModel
     {
         public string character_name { get; set; }

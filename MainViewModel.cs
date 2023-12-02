@@ -4,6 +4,9 @@ using System;
 
 namespace DnDManager
 {
+    /// <summary>
+    /// Main ViewModel that contains Current ViewModel 
+    /// </summary>
     internal class MainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;

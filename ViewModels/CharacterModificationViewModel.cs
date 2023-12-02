@@ -14,6 +14,9 @@ using static DnDManager.Models.Character;
 
 namespace DnDManager.ViewModels
 {
+    /// <summary>
+    /// ViewModel for character modification
+    /// </summary>
     class CharacterModificationViewModel : ViewModelBase
     {
         private readonly Models.Character? _character;
@@ -44,6 +47,8 @@ namespace DnDManager.ViewModels
             }
 		}
 
+        //Abilities
+        #region Abilities
         public Abilities Abilities
         {
             get => _abilities;
@@ -127,7 +132,7 @@ namespace DnDManager.ViewModels
                 NotifyAllSkills();
             }
         }
-
+        #endregion
         public SavingThrows ProficientSavingThrows
         {
             get => _proficientSavingThrows;
@@ -154,6 +159,9 @@ namespace DnDManager.ViewModels
             }
         }
 
+        /// <summary>
+        /// Notifies about all properties related to SavingThrowValues
+        /// </summary>
         private void NotifyAllSavingThrows()
         {
             OnPropertyChanged(nameof(StrengthSavingThrowValue));
@@ -164,6 +172,9 @@ namespace DnDManager.ViewModels
             OnPropertyChanged(nameof(CharismaSavingThrowValue));
         }
 
+        /// <summary>
+        /// Notifies about all properties related to Skills
+        /// </summary>
         private void NotifyAllSkills()
         {
             var skills = Enum.GetValues(typeof(Skills));
@@ -324,11 +335,6 @@ namespace DnDManager.ViewModels
 
         #endregion
 
-        public string GetCharacterInfo()
-        {
-            return _character.ToString();
-        }
-
         public SubmitCharacterCommand SubmitCharacterCommand { get; }
         public NavigateCommand<MainPlayerViewModel> CancelCommand { get; }
 
@@ -338,6 +344,7 @@ namespace DnDManager.ViewModels
             _abilities = new Abilities();
             _userStore = userStore;
             _character = character;
+            //Null character means nothing to edit => create new
             if (character is null)
             {
                 SubmitCharacterCommand = new SubmitCharacterCommand(_userStore, this, MainPlayerViewModelNS, databaseProvider, new Character(DEFAULTID));
@@ -351,6 +358,10 @@ namespace DnDManager.ViewModels
 
         }
 
+        /// <summary>
+        /// Get all fields from the character to ViewModel
+        /// </summary>
+        /// <param name="character"></param>
         private void LoadFromCharacter(Character character)
         {
             CharacterName = character.CharacterName;

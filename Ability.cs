@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DnDManager
 {
+    /// <summary>
+    /// Class for Abilities
+    /// </summary>
     public class Ability
     {
         public enum Type
