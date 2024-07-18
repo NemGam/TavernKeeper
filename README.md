@@ -35,9 +35,13 @@ Existing users can log in using their username and password.
 ### Create new character
 Using the built in character sheet editor, users can create a character. Many fields are calculated on the fly as user enters data.
 This allows for fast and easy way to manage the character creation sheet. Saving character will store it in the online database.
+
 ![image](https://github.com/user-attachments/assets/c090f23d-026d-4d78-89d6-be0bb5f5866c)
 
 ### Browse existing characters
 Previously created characters can be found and edited here.
+
 ![image](https://github.com/user-attachments/assets/1124fca6-4771-4a28-bcb4-e29fb5b069bb)
+
+
 
