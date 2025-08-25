@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\DnDManagerIcon.png" />
+    <None Remove="Resources\Images\CharacterSheet.jpg" />
+    <None Remove="Resources\Images\dndbg.jpg" />
+    <None Remove="Resources\Images\MainMenuBG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.21" />
+    <PackageReference Include="MathConverter" Version="2.2.0" />
+    <PackageReference Include="Npgsql" Version="7.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\DnDManagerIcon.png" />
+    <Resource Include="Resources\Images\CharacterSheet.jpg" />
+    <Resource Include="Resources\Images\dndbg.jpg" />
+    <Resource Include="Resources\Images\MainMenuBG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
+</Project>
